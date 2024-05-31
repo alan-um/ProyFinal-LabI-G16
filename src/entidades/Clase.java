@@ -82,5 +82,10 @@ public class Clase {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Clase{" + "idClase=" + idClase + ", nombre=" + nombre + ", entrenador=" + entrenador + ", horario=" + horario + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+    }
     
 }

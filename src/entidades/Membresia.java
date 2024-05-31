@@ -93,5 +93,10 @@ public class Membresia {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Membresia{" + "idMembresia=" + idMembresia + ", socio=" + socio + ", cantPases=" + cantPases + ", fInicio=" + fInicio + ", fFin=" + fFin + ", costo=" + costo + ", estado=" + estado + '}';
+    }
     
 }

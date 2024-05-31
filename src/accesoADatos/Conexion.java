@@ -9,7 +9,7 @@ import java.sql.Connection;
 public class Conexion {
   
     private static final String URL = "jdbc:mysql://localhost:3306/";
-    private static final String DB = "universidadg16";
+    private static final String DB = "gimnasiog16";
     private static final String USUARIO = "root";
     private static final String PASSWORD = "";
 

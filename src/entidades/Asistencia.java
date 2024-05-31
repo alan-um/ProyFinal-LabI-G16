@@ -60,5 +60,10 @@ public class Asistencia {
     public void setfAsistencia(LocalDate fAsistencia) {
         this.fAsistencia = fAsistencia;
     }
+
+    @Override
+    public String toString() {
+        return "Asistencia{" + "idAsistencia=" + idAsistencia + ", socio=" + socio + ", clase=" + clase + ", fAsistencia=" + fAsistencia + '}';
+    }
     
 }
