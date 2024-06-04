@@ -99,12 +99,11 @@ public class MembresiaData {
         return membresias;
     }
 
-    public void borrarMembresiaSocio(int idSocio, int idClase) {
+    public void borrarMembresiaSocio(int idSocio) {
         try {
-            String sql = "DELETE FROM membresia WHERE idSocio = ? AND idClase = ? ";
+            String sql = "UPDATE FROM membresia SET estado = ?  WHERE idSocio = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idSocio);
-            ps.setInt(2, idClase);
+            ps.setInt(1, idSocio);          
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Se borró la membresia con éxito.");
@@ -117,18 +116,18 @@ public class MembresiaData {
         }
 
     }
-//------>ACTUALIZO SUPONIENDO QUE HAY DISTINTOS PRECIOS DE PAQUETES EN MEMBRESIA-----------------
-    //distintos tipos de membresia segun su precio, también podría ser por cant de Clases..
-    public void actualizarMembresia(int idSocio, int idClase, double costo) {
+
+    public void actualizarMembresia(Membresia membresia) {
         try {
-            String sql = "UPDATE membresia SET costo = ? WHERE idSocio = ? AND idClase = ? ";
+            String sql = "UPDATE membresia SET cantPases = ?, fInicio=?, fFin=?, costo=?, estado=? WHERE idSocio = ? AND idClase = ?  WHERE idSocio=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDouble(1, costo);
-            ps.setInt(2, idSocio);
-            ps.setInt(3, idClase);
+            ps.setInt(1,membresia.getCantPases());
+            ps.setDate(2, Date.valueOf(membresia.getfInicio()));
+            ps.setDate(3, Date.valueOf(membresia.getfFin()));
+            ps.setBoolean(4, membresia.isEstado());
             int fila = ps.executeUpdate();
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Se actualizó el precio correctamente.");
+                JOptionPane.showMessageDialog(null, "Se actualizó la membresia correctamente.");
             }
             ps.close();
         } catch (SQLException e) {
@@ -136,25 +135,7 @@ public class MembresiaData {
         }
     }
 
-    public List<Socio> socioPorClases(int idClase) {
-        List<Socio> socios = new ArrayList();
-        try {
-            String sql = "SELECT idSocio FROM membresia WHERE idClase = ?;";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idClase);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Socio socio = new Socio();
-                socio = sData.buscarSocio(rs.getInt("idSocio"));
-                socios.add(socio);
-            }
-            ps.close();
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la Base de Datos " + ex.getMessage());
-        }
-        return socios;
-    }
 
 }
 
