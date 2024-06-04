@@ -11,25 +11,22 @@ public class Entrenador {
     private String nombre; //Nombre (VARCHAR): Nombre del entrenador.
     private String apellido; //Apellido (VARCHAR): Nombre del entrenador.
     private String especialidad; //Especialidad (VARCHAR): Especialidad del entrenador.
-    private String disponibilidad; //Disponibilidad (VARCHAR): Horarios de disponibilidad del entrenador
     private boolean estado; //Estado (boolean) para borrado lógico.
 
-    public Entrenador(int idEntrenador, int dni, String nombre, String apellido, String especialidad, String disponibilidad, boolean estado) {
+    public Entrenador(int idEntrenador, int dni, String nombre, String apellido, String especialidad, boolean estado) {
         this.idEntrenador = idEntrenador;
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
-        this.disponibilidad = disponibilidad;
         this.estado = estado;
     }
     
-    public Entrenador(int dni, String nombre, String apellido, String especialidad, String disponibilidad, boolean estado) {
+    public Entrenador(int dni, String nombre, String apellido, String especialidad, boolean estado) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
-        this.disponibilidad = disponibilidad;
         this.estado = estado;
     }
 
@@ -76,14 +73,6 @@ public class Entrenador {
         this.especialidad = especialidad;
     }
 
-    public String getDisponibilidad() {
-        return disponibilidad;
-    }
-
-    public void setDisponibilidad(String disponibilidad) {
-        this.disponibilidad = disponibilidad;
-    }
-
     public boolean isEstado() {
         return estado;
     }
@@ -94,7 +83,7 @@ public class Entrenador {
 
     @Override
     public String toString() {
-        return "Entrenador{" + "idEntrenador=" + idEntrenador + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", especialidad=" + especialidad + ", disponibilidad=" + disponibilidad + ", estado=" + estado + '}';
+        return "Entrenador{" + "idEntrenador=" + idEntrenador + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", especialidad=" + especialidad + ", estado=" + estado + '}';
     }
     
 }
