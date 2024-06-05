@@ -23,9 +23,7 @@ public class MembresiaData {
 
     private Connection con = null;
     private SocioData sData = new SocioData();
-    //private ClaseData cData = new ClaseData();
-    //private EntrenadorData eData = new EntrenadorData();
-    
+ 
     
     public MembresiaData() {
         con = Conexion.getConexion();
@@ -85,11 +83,14 @@ public class MembresiaData {
             ps.setInt(1, idSocio);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Membresia m = new Membresia();
+                 Membresia m = new Membresia();
                 m.setIdMembresia(rs.getInt("idMembresia"));
                 m.setSocio(sData.buscarSocio(rs.getInt("idSocio")));
-                //m.setClase(cData.buscarClase(rs.getInt("idClase")));----------------------------
-                //m.setEntrenador(eData.buscarClase(rs.getInt("idEntrenador")));--------------------
+                m.setCantPases(rs.getInt("cantPases"));
+                m.setfInicio(rs.getDate("fInicio").toLocalDate());
+                m.setfFin(rs.getDate("fFin").toLocalDate());
+                m.setCosto(rs.getInt("costo"));
+                m.setEstado(rs.getBoolean("estado"));
                 membresias.add(m);
             }
             ps.close();
@@ -101,7 +102,7 @@ public class MembresiaData {
 
     public void borrarMembresiaSocio(int idSocio) {
         try {
-            String sql = "UPDATE FROM membresia SET estado = ?  WHERE idSocio = ?";
+            String sql = "UPDATE FROM membresia SET estado = 0  WHERE idSocio = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idSocio);          
             int fila = ps.executeUpdate();
@@ -114,12 +115,11 @@ public class MembresiaData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Membresia");
         }
-
     }
 
     public void actualizarMembresia(Membresia membresia) {
         try {
-            String sql = "UPDATE membresia SET cantPases = ?, fInicio=?, fFin=?, costo=?, estado=? WHERE idSocio = ? AND idClase = ?  WHERE idSocio=?";
+            String sql = "UPDATE membresia SET cantPases = ?, fInicio=?, fFin=?, costo=?, estado=? WHERE idSocio = ? AND idClase = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,membresia.getCantPases());
             ps.setDate(2, Date.valueOf(membresia.getfInicio()));
