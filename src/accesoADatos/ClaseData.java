@@ -83,6 +83,37 @@ public class ClaseData {
             return clase;    
         }
     
+    //Buscar una Clase según su horario
+    public Clase buscarClasePorHorario(LocalTime horario) {
+        Clase clase = null;
+        String sql = "SELECT idClase, nombre, idEntrenador, capacidad FROM clase WHERE horario = ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setTime(1, Time.valueOf(horario));
+            
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador entrenador = eData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setEntrenador(entrenador);
+                clase.setHorario(horario);
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ninguna clase en ese horario.");              
+                ps.close();}
+            
+            }catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Clase " + ex.getMessage());
+            }
+
+            return clase;    
+        }
 
     //Listar las Clase de la BD, que estén activas.
     public List<Clase> listarClases() {
@@ -157,6 +188,53 @@ public class ClaseData {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase");
         }
 
+    }
+    
+    //Listar horarios disponibles
+    public List<LocalTime> horariosDisponibles(){
+        List<LocalTime> horarios = new ArrayList();
+        
+        //Carga de horarios disponibles de acuerdo al horario de atención del gimnasio. De 8hs a 13hs. y 15hs a 22hs.
+        for(int i=8;i<13;i++){
+            horarios.add(LocalTime.of(i,0,0));
+        }
+        for(int i=15;i<22;i++){
+            horarios.add(LocalTime.of(i,0,0));
+        }
+        
+        //Remueve los horarios ocupados por las clases activas
+        try {
+            String sql = "SELECT horario FROM clase WHERE estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                horarios.remove((LocalTime)rs.getTime("horario").toLocalTime());
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase " + ex.getMessage());
+        }
+        
+        return horarios;
+    }
+    
+    //Listar los nombres de las Clases que se pueden dictar en el Gimnasio.
+    public List<String> nombresDeClases() {
+
+        List<String> clases = new ArrayList<>();
+        
+        //Hardcode con los nombres de las clases disponibles
+        clases.add("Spinning");
+        clases.add("CrossFit");
+        clases.add("Running");
+        clases.add("Zumba");
+        clases.add("Musculación");
+        clases.add("Aerobic");
+        clases.add("Natación");
+        clases.add("Elongación");
+        
+        return clases;
     }
    
 }

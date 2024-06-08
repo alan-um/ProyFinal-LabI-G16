@@ -40,8 +40,10 @@ public class MembresiaData {
             ps.setDate(4, Date.valueOf(membr.getfFin()));
             ps.setDouble(5, membr.getCosto());
             ps.setBoolean(6, membr.isEstado());
-            ResultSet rs = ps.getGeneratedKeys();
             ps.executeUpdate();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+            
             if (rs.next()) {
                 membr.setIdMembresia(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Se ha efectuado la membresía con éxito.");
@@ -51,6 +53,33 @@ public class MembresiaData {
         }
     }
 
+        
+    public Membresia buscarMembresia(int id) {
+        Membresia m = null;
+        String sql = "SELECT * FROM membresia WHERE idMembresia = ?";
+        try {
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m = new Membresia();
+                m.setIdMembresia(rs.getInt("idMembresia"));
+                m.setSocio(sData.buscarSocio(rs.getInt("idSocio")));
+                m.setCantPases(rs.getInt("cantPases"));
+                m.setfInicio(rs.getDate("fInicio").toLocalDate());
+                m.setfFin(rs.getDate("fFin").toLocalDate());
+                m.setCosto(rs.getInt("costo"));
+                m.setEstado(rs.getBoolean("estado"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Membresia " + ex.getMessage());
+        }
+        return m;
+    }
+    
+    
     public List<Membresia> listadoMembresia() {
         List<Membresia> membresias = new ArrayList();
         try {
@@ -100,16 +129,14 @@ public class MembresiaData {
         return membresias;
     }
 
-    public void borrarMembresiaSocio(int idSocio) {
+    public void eliminarMembresia(int id) {
         try {
-            String sql = "UPDATE FROM membresia SET estado = 0  WHERE idSocio = ?";
+            String sql = "UPDATE membresia SET estado = 0 WHERE idMembresia = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idSocio);          
+            ps.setInt(1, id);          
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Se borró la membresia con éxito.");
-            } else if (fila > 1) {
-                JOptionPane.showMessageDialog(null, "Se borraron " + fila + " registros de membresía.");
             }
             ps.close();
         } catch (SQLException e) {
@@ -117,21 +144,24 @@ public class MembresiaData {
         }
     }
 
-    public void actualizarMembresia(Membresia membresia) {
+    public void modificarMembresia(Membresia membresia) {
         try {
-            String sql = "UPDATE membresia SET cantPases = ?, fInicio=?, fFin=?, costo=?, estado=? WHERE idSocio = ? AND idClase = ?";
+            String sql = "UPDATE membresia SET idSocio = ?, cantPases = ?, fInicio = ?, fFin = ?, costo = ?, estado = ? WHERE idMembresia = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,membresia.getCantPases());
-            ps.setDate(2, Date.valueOf(membresia.getfInicio()));
-            ps.setDate(3, Date.valueOf(membresia.getfFin()));
-            ps.setBoolean(4, membresia.isEstado());
+            ps.setInt(1,membresia.getSocio().getIdSocio());
+            ps.setInt(2,membresia.getCantPases());
+            ps.setDate(3, Date.valueOf(membresia.getfInicio()));
+            ps.setDate(4, Date.valueOf(membresia.getfFin()));
+            ps.setDouble(5,membresia.getCosto());
+            ps.setBoolean(6, membresia.isEstado());
+            ps.setInt(7, membresia.getIdMembresia());
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Se actualizó la membresia correctamente.");
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Membresia");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Membresia "+ e.getMessage());
         }
     }
 
