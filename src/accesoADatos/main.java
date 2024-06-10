@@ -63,6 +63,12 @@ public class main {
 //            System.out.println(aux.toString());
 //        }
 //
+//Listado de Socios según nombre
+//        List<Socio> lista = new ArrayList();
+//        lista = sData.listarSociosPorNombre("");//Si el String es vacio devuelve toda la BD
+//        for (Socio aux:lista) {
+//            System.out.println(aux.toString());
+//        }
 //
 /////////////////////////////--PRUEBA DE ENTRENADORDATA--////////////////////////////////
 //    
@@ -100,6 +106,20 @@ public class main {
 //            System.out.println(aux.toString());
 //        }
 //
+//Listado de Entrenadores según nombre o apellido 
+//        List<Entrenador> lista = new ArrayList();
+//        lista = eData.listarEntrenadoresPorNombre("");
+//        for (Entrenador aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
+//Listado de Entrenadores según especialidad    
+//        List<Entrenador> lista = new ArrayList();
+//        lista = eData.listarEntrenadoresPorEspecialidad("");
+//        for (Entrenador aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
 /////////////////////////////--PRUEBA DE CLASEDATA--////////////////////////////////
 //     
 //Agregar una Clase Nueva
@@ -129,6 +149,12 @@ public class main {
 //            System.out.println(clase.toString());
 //        }
 //
+//Listar los horarios de atencion
+//        List<LocalTime> lista = cData.horariosDeAtencion();
+//        for (LocalTime aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
 //Listar los horarios disponibles
 //        List<LocalTime> lista = cData.horariosDisponibles();
 //        for (LocalTime aux:lista) {
@@ -147,6 +173,27 @@ public class main {
 //Listado de Clases       
 //        List<Clase> lista = new ArrayList();
 //        lista = cData.listarClases();
+//        for (Clase aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
+//Listado de Clases segun nombre
+//        List<Clase> lista = new ArrayList();
+//        lista = cData.listarClasesPorNombre("");
+//        for (Clase aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
+//Listado de Clases segun entrenador
+//        List<Clase> lista = new ArrayList();
+//        lista = cData.listarClasesPorEntrenador(eData.buscarEntrenador(2));
+//        for (Clase aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//
+//Listado de Clases segun Horario
+//        List<Clase> lista = new ArrayList();
+//        lista = cData.listarClasesPorHorario(LocalTime.of(8, 0));
 //        for (Clase aux:lista) {
 //            System.out.println(aux.toString());
 //        }

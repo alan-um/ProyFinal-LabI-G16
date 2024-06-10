@@ -114,6 +114,95 @@ public class ClaseData {
 
             return clase;    
         }
+    
+    //Listar las Clase según nombre.
+    public List<Clase> listarClasesPorNombre(String nombre) {
+
+        List<Clase> clases = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM clase WHERE nombre LIKE ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, '%'+nombre+'%');
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador entrenador = eData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setEntrenador(entrenador);
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(true);
+                
+                clases.add(clase);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase " + ex.getMessage());
+        }
+        return clases;
+    }
+    
+    //Listar las Clase según Entrenador.
+    public List<Clase> listarClasesPorEntrenador(Entrenador entrenador) {
+
+        List<Clase> clases = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM clase WHERE idEntrenador = ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, entrenador.getIdEntrenador());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                clase.setEntrenador(entrenador);
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(true);
+                
+                clases.add(clase);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase " + ex.getMessage());
+        }
+        return clases;
+    }
+    
+    //Listar las Clase según Horario.
+    public List<Clase> listarClasesPorHorario(LocalTime horario) {
+
+        List<Clase> clases = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM clase WHERE horario = ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setTime(1, Time.valueOf(horario));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador entrenador = eData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setEntrenador(entrenador);
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(true);
+                
+                clases.add(clase);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase " + ex.getMessage());
+        }
+        return clases;
+    }
 
     //Listar las Clase de la BD, que estén activas.
     public List<Clase> listarClases() {
@@ -188,6 +277,21 @@ public class ClaseData {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Clase");
         }
 
+    }
+    
+    //Listar horarios de atención del Gimnasio
+    public List<LocalTime> horariosDeAtencion(){
+        List<LocalTime> horarios = new ArrayList();
+        
+        //Carga de horarios disponibles de acuerdo al horario de atención del gimnasio. De 8hs a 13hs. y 15hs a 22hs.
+        for(int i=8;i<13;i++){
+            horarios.add(LocalTime.of(i,0,0));
+        }
+        for(int i=15;i<22;i++){
+            horarios.add(LocalTime.of(i,0,0));
+        }
+        
+        return horarios;
     }
     
     //Listar horarios disponibles

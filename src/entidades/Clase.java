@@ -85,7 +85,7 @@ public class Clase {
 
     @Override
     public String toString() {
-        return "Clase{" + "idClase=" + idClase + ", nombre=" + nombre + ", entrenador=" + entrenador + ", horario=" + horario + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+        return horario + " - " + nombre + " - " + entrenador.getApellido() + ", " + entrenador.getNombre();
     }
     
 }
