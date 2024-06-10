@@ -109,7 +109,71 @@ public class EntrenadorData {
             return entrenador;    
         }
     
+    //Listar los entrenadores según nombre o apellido.
+    public List<Entrenador> listarEntrenadoresPorNombre(String nombre) {
+        String apellido = nombre;
+        List<Entrenador> entrenadores = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM entrenador WHERE ( nombre LIKE ? OR apellido LIKE ? ) AND estado = 1 ";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, '%'+nombre+'%');
+            ps.setString(2, '%'+apellido+'%');
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+                
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getInt("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                
+                entrenadores.add(entrenador);
 
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Entrenador " + ex.getMessage());
+        }
+        return entrenadores;
+    }
+    
+    //Listar los entrenadores según especialidad.
+    public List<Entrenador> listarEntrenadoresPorEspecialidad(String especialidad) {
+
+        List<Entrenador> entrenadores = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM entrenador WHERE especialidad LIKE ? AND estado = 1 ";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, '%'+especialidad+'%');
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+                
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getInt("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                
+                entrenadores.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Entrenador " + ex.getMessage());
+        }
+        return entrenadores;
+    }
+    
     //Listar los entrenadores de la BD, que estén activos.
     public List<Entrenador> listarEntrenadores() {
 

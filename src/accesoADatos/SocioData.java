@@ -115,7 +115,42 @@ public class SocioData {
             return socio;    
         }
     
+    //Listar los socios según su nombre.
+    public List<Socio> listarSociosPorNombre(String nombre) {
 
+        List<Socio> socios = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM socio WHERE nombre LIKE ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps = con.prepareStatement(sql);
+            ps.setString(1, '%'+nombre+'%');
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Socio socio = new Socio();
+                
+                socio.setIdSocio(rs.getInt("idSocio"));
+                socio.setDni(rs.getInt("dni"));
+                socio.setNombre(rs.getString("nombre"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getString("telefono"));
+                socio.setEstado(rs.getBoolean("estado"));
+                
+                socios.add(socio);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Socio " + ex.getMessage());
+        }
+        return socios;
+    }
+    
+    
     //Listar los socios de la BD, que estén activos.
     public List<Socio> listarSocios() {
 
