@@ -9,17 +9,18 @@ package vistas;
  *
  * @author CCMEW
  */
-public class Membresia extends javax.swing.JInternalFrame {
+public class Asistencia extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form gestionSocios
      */
-    public Membresia() {
+    public Asistencia() {
         initComponents();
        int x=JFInicio.escritorio.getWidth()- this.getWidth();
         int y=JFInicio.escritorio.getHeight() - this.getHeight();
         setLocation(x/2, y/2);
-           }
+      
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,24 +36,19 @@ public class Membresia extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabelNombre1 = new javax.swing.JLabel();
         jComboBoxHorario2 = new javax.swing.JComboBox<>();
-        jTextEdad = new javax.swing.JTextField();
+        jLabelNombre1 = new javax.swing.JLabel();
         jLabelNombre2 = new javax.swing.JLabel();
+        jComboBoxHorario3 = new javax.swing.JComboBox<>();
         jLabelNombre3 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jLabelNombre4 = new javax.swing.JLabel();
-        jTextEdad1 = new javax.swing.JTextField();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("GESTION MEMBRESIAS - ALTA / RENOVACION");
+        setTitle("GESTION CLASES - ASISTENCIA");
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -65,8 +61,8 @@ public class Membresia extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 600, 120, 70));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/membresias.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -40, 560, 230));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/asistencia.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -40, 560, 230));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,17 +77,7 @@ public class Membresia extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 570, 270));
-
-        jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre.setText("Ingrese Cantidad de pases:");
-        jPanel1.add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 220, 40));
-
-        jLabelNombre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre1.setText("Seleccione Socio:");
-        jPanel1.add(jLabelNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 170, 40));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 810, 160));
 
         jComboBoxHorario2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxHorario2.setForeground(new java.awt.Color(0, 0, 153));
@@ -100,69 +86,45 @@ public class Membresia extends javax.swing.JInternalFrame {
                 jComboBoxHorario2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxHorario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 490, 30));
+        jPanel1.add(jComboBoxHorario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 450, 490, 30));
 
-        jTextEdad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEdad.setForeground(new java.awt.Color(0, 51, 153));
-        jTextEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextEdadActionPerformed(evt);
-            }
-        });
-        jTextEdad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextEdadKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 100, 30));
+        jLabelNombre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelNombre1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre1.setText("Seleccione Socio:");
+        jPanel1.add(jLabelNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 170, 40));
 
         jLabelNombre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre2.setText("Fecha desde:");
-        jPanel1.add(jLabelNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 530, 120, 40));
+        jLabelNombre2.setText("Seleccione Fecha:");
+        jPanel1.add(jLabelNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 170, 40));
+
+        jComboBoxHorario3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxHorario3.setForeground(new java.awt.Color(0, 0, 153));
+        jComboBoxHorario3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxHorario3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxHorario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 490, 30));
 
         jLabelNombre3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre3.setText("Fecha hasta:");
-        jPanel1.add(jLabelNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, 120, 40));
+        jLabelNombre3.setText("Seleccione Clase:");
+        jPanel1.add(jLabelNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 170, 40));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 190, 30));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
-        btnNuevo.setText("Nuevo/Renovar");
+        btnNuevo.setText("Registrar asistencia");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 600, 160, 70));
+        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 190, 70));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
-        btnEliminar.setText("Eliminar");
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 600, 150, 70));
-
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
-        btnGuardar.setText("Guardar");
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 70));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 200, -1));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 540, 200, 20));
-
-        jLabelNombre4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre4.setText("Costo:");
-        jPanel1.add(jLabelNombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 490, 70, 40));
-
-        jTextEdad1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEdad1.setForeground(new java.awt.Color(0, 51, 153));
-        jTextEdad1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextEdad1ActionPerformed(evt);
-            }
-        });
-        jTextEdad1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextEdad1KeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextEdad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 100, 30));
+        btnEliminar.setText("Anular asistencia");
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, -1, 70));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -189,47 +151,29 @@ public class Membresia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxHorario2ActionPerformed
 
-    private void jTextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdadKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdadKeyTyped
-
-    private void jTextEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEdadActionPerformed
+    private void jComboBoxHorario3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHorario3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdadActionPerformed
+    }//GEN-LAST:event_jComboBoxHorario3ActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         
     }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void jTextEdad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEdad1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdad1ActionPerformed
-
-    private void jTextEdad1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdad1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdad1KeyTyped
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> jComboBoxHorario2;
+    private javax.swing.JComboBox<String> jComboBoxHorario3;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFondo;
-    private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNombre1;
     private javax.swing.JLabel jLabelNombre2;
     private javax.swing.JLabel jLabelNombre3;
-    private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextEdad;
-    private javax.swing.JTextField jTextEdad1;
     // End of variables declaration//GEN-END:variables
 }

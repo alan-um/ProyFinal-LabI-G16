@@ -42,12 +42,12 @@ public class gestionClases extends javax.swing.JInternalFrame {
         jLabelEdad = new javax.swing.JLabel();
         jLabelEmail = new javax.swing.JLabel();
         jTextCodigoClase = new javax.swing.JTextField();
-        jTextNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabelPorCodigo = new javax.swing.JLabel();
         jComboBoxHorario = new javax.swing.JComboBox<>();
         jTextCapacidad = new javax.swing.JTextField();
         jComboBoxCodigo1 = new javax.swing.JComboBox<>();
+        jComboBoxCodigo2 = new javax.swing.JComboBox<>();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -119,10 +119,6 @@ public class gestionClases extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextCodigoClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 100, 30));
 
-        jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 260, 30));
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clases.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, -30, 530, 230));
 
@@ -140,7 +136,11 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
         jComboBoxCodigo1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxCodigo1.setForeground(new java.awt.Color(0, 0, 153));
-        jPanel1.add(jComboBoxCodigo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 120, 30));
+        jPanel1.add(jComboBoxCodigo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 300, 30));
+
+        jComboBoxCodigo2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxCodigo2.setForeground(new java.awt.Color(0, 0, 153));
+        jPanel1.add(jComboBoxCodigo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 120, 30));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -161,7 +161,7 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
     private void limpiarCampos() {
         jTextCodigoClase.setText(" ");
-        jTextNombre.setText(" ");
+      
         jComboBoxHorario.setSelectedItem(0);
         jTextCapacidad.setText(" ");
 
@@ -188,6 +188,7 @@ public class gestionClases extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> jComboBoxCodigo1;
+    private javax.swing.JComboBox<String> jComboBoxCodigo2;
     private javax.swing.JComboBox<String> jComboBoxHorario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelApellido;
@@ -201,6 +202,5 @@ public class gestionClases extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextCapacidad;
     private javax.swing.JTextField jTextCodigoClase;
-    private javax.swing.JTextField jTextNombre;
     // End of variables declaration//GEN-END:variables
 }

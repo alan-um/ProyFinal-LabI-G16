@@ -42,8 +42,6 @@ public class listadoClases extends javax.swing.JInternalFrame {
         jComboBoxHorario1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        btnNuevo = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -62,11 +60,11 @@ public class listadoClases extends javax.swing.JInternalFrame {
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 610, 120, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clasesDisp.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -40, 560, 230));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, -40, 560, 230));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Socio", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
-        jPanel2.setToolTipText("Buscar un Socio");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Clase", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
+        jPanel2.setToolTipText("Buscar Clase");
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.setName("Buscar"); // NOI18N
         jPanel2.setOpaque(false);
@@ -182,20 +180,7 @@ public class listadoClases extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 710, 380));
-
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
-        btnNuevo.setText("Inscribir socio");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 170, 60));
-
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
-        btnEliminar.setText("Desinscribir Socio");
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 620, 170, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 710, 390));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 710));
@@ -265,15 +250,9 @@ public class listadoClases extends javax.swing.JInternalFrame {
     private void jComboBoxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHorarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxHorarioActionPerformed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-//        limpiarCampos();
-    }//GEN-LAST:event_btnNuevoActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> jComboBoxHorario;
     private javax.swing.JComboBox<String> jComboBoxHorario1;

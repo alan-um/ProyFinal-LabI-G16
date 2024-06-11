@@ -40,20 +40,16 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jLabelTelefono = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelCodigo = new javax.swing.JLabel();
         jLabelDni = new javax.swing.JLabel();
         jLabelApellido = new javax.swing.JLabel();
         jLabelEdad = new javax.swing.JLabel();
-        jLabelEmail = new javax.swing.JLabel();
-        jTextTelefono = new javax.swing.JTextField();
         jTextCodigo = new javax.swing.JTextField();
         jTextDni = new javax.swing.JTextField();
         jTextNombre = new javax.swing.JTextField();
         jTextApellido = new javax.swing.JTextField();
         jTextEdad = new javax.swing.JTextField();
-        jTextEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabelPorDni = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
@@ -93,15 +89,10 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 600, 120, 70));
 
-        jLabelTelefono.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelTelefono.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelTelefono.setText("TELEFONO:");
-        jPanel1.add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 120, 40));
-
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre.setText("NOMBRE:");
-        jPanel1.add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 120, 40));
+        jPanel1.add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 120, 40));
 
         jLabelCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelCodigo.setForeground(new java.awt.Color(255, 255, 255));
@@ -111,36 +102,22 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
                 jLabelCodigoKeyTyped(evt);
             }
         });
-        jPanel1.add(jLabelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 120, 40));
+        jPanel1.add(jLabelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 120, 40));
 
         jLabelDni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelDni.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDni.setText("DNI:");
-        jPanel1.add(jLabelDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 50, 40));
+        jPanel1.add(jLabelDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 50, 40));
 
         jLabelApellido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelApellido.setForeground(new java.awt.Color(255, 255, 255));
         jLabelApellido.setText("APELLIDO:");
-        jPanel1.add(jLabelApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 120, 40));
+        jPanel1.add(jLabelApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 120, 40));
 
         jLabelEdad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelEdad.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEdad.setText("ESPECIALIDAD:");
-        jPanel1.add(jLabelEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 140, 40));
-
-        jLabelEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelEmail.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelEmail.setText("EMAIL:");
-        jPanel1.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 120, 40));
-
-        jTextTelefono.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextTelefono.setForeground(new java.awt.Color(0, 51, 153));
-        jTextTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextTelefonoKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 120, 30));
+        jPanel1.add(jLabelEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 140, 40));
 
         jTextCodigo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextCodigo.setForeground(new java.awt.Color(0, 51, 153));
@@ -149,7 +126,7 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
                 jTextCodigoActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 100, 30));
+        jPanel1.add(jTextCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 100, 30));
 
         jTextDni.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextDni.setForeground(new java.awt.Color(0, 51, 153));
@@ -159,23 +136,19 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
                 jTextDniKeyTyped(evt);
             }
         });
-        jPanel1.add(jTextDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 120, 30));
+        jPanel1.add(jTextDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 120, 30));
 
         jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 260, 30));
+        jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, 30));
 
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 260, 30));
+        jPanel1.add(jTextApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, 30));
 
         jTextEdad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextEdad.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 220, 30));
-
-        jTextEmail.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEmail.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, 260, 30));
+        jPanel1.add(jTextEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 220, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tituloEntrenadores.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, -40, 560, 230));
@@ -207,8 +180,7 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
        jTextApellido.setText(" ");
        jTextNombre.setText(" ");
        jTextEdad.setText(" ");
-       jTextEmail.setText(" ");
-       jTextTelefono.setText(" ");
+      
        
     }
     
@@ -240,11 +212,6 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         if(c<'0' || c>'9')evt.consume();          // TODO add your handling code here:
     }//GEN-LAST:event_jLabelCodigoKeyTyped
 
-    private void jTextTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextTelefonoKeyTyped
-       char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();  
-    }//GEN-LAST:event_jTextTelefonoKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
@@ -256,19 +223,15 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JLabel jLabelDni;
     private javax.swing.JLabel jLabelEdad;
-    private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelPorDni;
-    private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextApellido;
     private javax.swing.JTextField jTextCodigo;
     private javax.swing.JTextField jTextDni;
     private javax.swing.JTextField jTextEdad;
-    private javax.swing.JTextField jTextEmail;
     private javax.swing.JTextField jTextNombre;
-    private javax.swing.JTextField jTextTelefono;
     // End of variables declaration//GEN-END:variables
 }

@@ -46,6 +46,7 @@ public class JFInicio extends javax.swing.JFrame {
         jMenuClases = new javax.swing.JMenu();
         jMenuItemClasesListado = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemAsistencia = new javax.swing.JMenuItem();
         jMenuMembresias = new javax.swing.JMenu();
         jMenuAltaMembresia = new javax.swing.JMenuItem();
         jMenuItemListadoMembresias = new javax.swing.JMenuItem();
@@ -144,6 +145,14 @@ public class JFInicio extends javax.swing.JFrame {
             }
         });
         jMenuClases.add(jMenuItem2);
+
+        jMenuItemAsistencia.setText("Asistencia");
+        jMenuItemAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAsistenciaActionPerformed(evt);
+            }
+        });
+        jMenuClases.add(jMenuItemAsistencia);
 
         jMenuBar1.add(jMenuClases);
 
@@ -254,6 +263,12 @@ public class JFInicio extends javax.swing.JFrame {
         listmembre.show();
     }//GEN-LAST:event_jMenuItemListadoMembresiasActionPerformed
 
+    private void jMenuItemAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAsistenciaActionPerformed
+        Asistencia asiste = new Asistencia();
+        escritorio.add(asiste);
+        asiste.show();
+    }//GEN-LAST:event_jMenuItemAsistenciaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,6 +315,7 @@ public class JFInicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEntrenadores;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemAsistencia;
     private javax.swing.JMenuItem jMenuItemClasesListado;
     private javax.swing.JMenuItem jMenuItemEntrenadores;
     private javax.swing.JMenuItem jMenuItemListadoEntrenadores;

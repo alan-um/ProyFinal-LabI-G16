@@ -48,7 +48,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("GESTION SOCIOS - LISTADOS");
+        setTitle("GESTION SOCIOS - LISTADO");
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -105,7 +105,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
 
         jRadioApellido.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jRadioApellido.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioApellido.setText("Apellido");
+        jRadioApellido.setText("Nombre");
         jRadioApellido.setOpaque(false);
         jRadioApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
