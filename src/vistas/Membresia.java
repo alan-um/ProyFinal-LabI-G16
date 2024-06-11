@@ -41,11 +41,11 @@ public class Membresia extends javax.swing.JInternalFrame {
         jTextEdad = new javax.swing.JTextField();
         jLabelNombre2 = new javax.swing.JLabel();
         jLabelNombre3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jDateChooser4 = new com.toedter.calendar.JDateChooser();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -123,8 +123,6 @@ public class Membresia extends javax.swing.JInternalFrame {
         jLabelNombre3.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre3.setText("Fecha hasta:");
         jPanel1.add(jLabelNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, 120, 40));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 180, -1));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 540, 200, -1));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
         btnNuevo.setText("Nuevo/Renovar");
@@ -142,6 +140,8 @@ public class Membresia extends javax.swing.JInternalFrame {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 70));
+        jPanel1.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 540, 160, -1));
+        jPanel1.add(jDateChooser4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 170, -1));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -188,8 +188,8 @@ public class Membresia extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> jComboBoxHorario2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
+    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;

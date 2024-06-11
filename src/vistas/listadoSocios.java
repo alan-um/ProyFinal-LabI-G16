@@ -6,7 +6,7 @@
 package vistas;
 
 /**
- *
+ * 
  * @author CCMEW
  */
 public class listadoSocios extends javax.swing.JInternalFrame {
