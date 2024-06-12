@@ -7,6 +7,7 @@ import entidades.Membresia;
 import entidades.Socio;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -226,6 +227,13 @@ public class main {
 //            System.out.println(aux.toString());
 //        }
 //        
+//Listado de Membresias según idSocio y fecha
+//        List<Membresia> lista = new ArrayList();
+//        lista = mData.membresiasPorSocioYFecha(1,LocalDate.of(2024, 4, 20));
+//        for (Membresia aux:lista) {
+//            System.out.println(aux.toString());
+//        }
+//   
 //Eliminar (poner estado 0) una Membresia
 //        mData.eliminarMembresia(1);
 //
@@ -237,6 +245,14 @@ public class main {
 //            mData.modificarMembresia(membr);
 //        }
 //
+//Es nueva membresia valida??
+//        Socio socio = new Socio (1, 0, "nombre", "apellido", 0, "correo", "telefono", true);
+//        if(mData.nuevaMembresiaValida(socio,new Membresia(null, 8, LocalDate.of(2024, 4, 25), LocalDate.of(2024,5,2), 5, true))){
+//            System.out.println("Membresia nueva es válida");
+//        }else{
+//            System.out.println("Ya existe otra membresía activa para la fecha ingresada");
+//        }
+//  
 //
 /////////////////////////////--PRUEBA DE ASISTENCIADATA--////////////////////////////////        
 //        
@@ -248,6 +264,13 @@ public class main {
 //
 //Buscar Asistencia por ID
 //        Asistencia asist = aData.buscarAsistencia(1);
+//        if(asist!=null){
+//            System.out.println(asist.toString());
+//        }
+//
+//Buscar Asistencia por Socio y fecha
+//        Socio socio = sData.buscarSocio(1);
+//        Asistencia asist = aData.buscarAsistencia(socio, LocalDate.of(2024,6,3));
 //        if(asist!=null){
 //            System.out.println(asist.toString());
 //        }

@@ -252,7 +252,7 @@ public class JFInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuAltaMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAltaMembresiaActionPerformed
-        Membresia membre = new Membresia();
+        gestionMembresia membre = new gestionMembresia();
         escritorio.add(membre);
         membre.show();
     }//GEN-LAST:event_jMenuAltaMembresiaActionPerformed
@@ -264,7 +264,7 @@ public class JFInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemListadoMembresiasActionPerformed
 
     private void jMenuItemAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAsistenciaActionPerformed
-        Asistencia asiste = new Asistencia();
+        gestionAsistencia asiste = new gestionAsistencia();
         escritorio.add(asiste);
         asiste.show();
     }//GEN-LAST:event_jMenuItemAsistenciaActionPerformed
