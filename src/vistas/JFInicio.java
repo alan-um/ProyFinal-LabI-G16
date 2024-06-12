@@ -138,7 +138,7 @@ public class JFInicio extends javax.swing.JFrame {
         });
         jMenuClases.add(jMenuItemClasesListado);
 
-        jMenuItem2.setText("Listado e Inscripción");
+        jMenuItem2.setText("Listado");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -159,7 +159,7 @@ public class JFInicio extends javax.swing.JFrame {
         jMenuMembresias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconMembresia.png"))); // NOI18N
         jMenuMembresias.setText("Membresias");
 
-        jMenuAltaMembresia.setText("Alta");
+        jMenuAltaMembresia.setText("Alta y renovación");
         jMenuAltaMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuAltaMembresiaActionPerformed(evt);
@@ -167,7 +167,7 @@ public class JFInicio extends javax.swing.JFrame {
         });
         jMenuMembresias.add(jMenuAltaMembresia);
 
-        jMenuItemListadoMembresias.setText("Listado y renovación");
+        jMenuItemListadoMembresias.setText("Listado ");
         jMenuItemListadoMembresias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemListadoMembresiasActionPerformed(evt);

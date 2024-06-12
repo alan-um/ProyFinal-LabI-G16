@@ -120,7 +120,7 @@ public class SocioData {
 
         List<Socio> socios = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM socio WHERE nombre LIKE ? AND estado = 1 ";
+            String sql = "SELECT * FROM socio WHERE nombre LIKE ? AND estado = 1 order by nombre";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps = con.prepareStatement(sql);
@@ -156,7 +156,7 @@ public class SocioData {
 
         List<Socio> socios = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM socio WHERE estado = 1 ";
+            String sql = "SELECT * FROM socio WHERE estado = 1 order by apellido ";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
