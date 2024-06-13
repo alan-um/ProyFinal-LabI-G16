@@ -8,6 +8,7 @@ package vistas;
 import accesoADatos.ClaseData;
 import accesoADatos.MembresiaData;
 import entidades.Clase;
+import entidades.Membresia;
 import entidades.Socio;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ private void borrarFilaTabla() {
     }
 private DefaultTableModel cargaMembresias() {
          
-   List<entidades.Membresia> lista=membresiaData.listaMembresia();
+   List<entidades.Membresia> lista=membresiaData.listadoMembresia();
    for(entidades.Membresia m: lista){
      modelo.addRow(new Object[] {m.getIdMembresia() ,m.getSocio().getIdSocio(),m.getCantPases(), m.getfInicio(), m.getfFin(),m.getCosto()});  
    }
@@ -79,7 +80,7 @@ private DefaultTableModel cargaSocioPorId() {
     
         List<Membresia>lista = membresiaData.membresiasPorSocio(Integer.parseInt(jTextId.getText()));
         for (Membresia m : lista) {
-             modelo.addRow(new Object[]{m.getidMembresia(), m.getidSocio(), m.getcantPases(), m.getfInicio(), m.getfFin(), m.getcosto()});
+             modelo.addRow(new Object[]{m.getIdMembresia(), m.getSocio(), m.getCantPases(), m.getfInicio(), m.getfFin(), m.getCosto()});
         }
         return modelo;
 }   
