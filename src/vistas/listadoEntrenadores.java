@@ -18,11 +18,12 @@ import javax.swing.table.DefaultTableModel;
  * @author CCMEW
  */
 public class listadoEntrenadores extends javax.swing.JInternalFrame {
-private List<Entrenador>listaS; //1
-private EntrenadorData entrenadorData;  //2
 
- private DefaultTableModel modelo = new DefaultTableModel();
- 
+    private List<Entrenador> listaS; //1
+    private EntrenadorData entrenadorData;  //2
+
+    private DefaultTableModel modelo = new DefaultTableModel();
+
     public listadoEntrenadores() {
         initComponents();
         int x = JFInicio.escritorio.getWidth() - this.getWidth();
@@ -31,61 +32,63 @@ private EntrenadorData entrenadorData;  //2
         jTextEspecialidad.setEnabled(false);
         entrenadorData = new EntrenadorData();//3
         armarCabeceraTabla();
-       // cargaEntrenadores();
-         jTableEntrenadores.getColumnModel().getColumn(0).setPreferredWidth(80);
-         jTableEntrenadores.getColumnModel().getColumn(1).setPreferredWidth(100);
-         jTableEntrenadores.getColumnModel().getColumn(2).setPreferredWidth(250);
-         jTableEntrenadores.getColumnModel().getColumn(3).setPreferredWidth(250);
-         jTableEntrenadores.getColumnModel().getColumn(4).setPreferredWidth(200);
-         jTableEntrenadores.setRowHeight(30);
+        cargaSocioPorNombre();
+        jTableEntrenadores.getColumnModel().getColumn(0).setPreferredWidth(80);
+        jTableEntrenadores.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableEntrenadores.getColumnModel().getColumn(2).setPreferredWidth(250);
+        jTableEntrenadores.getColumnModel().getColumn(3).setPreferredWidth(250);
+        jTableEntrenadores.getColumnModel().getColumn(4).setPreferredWidth(200);
+        jTableEntrenadores.setRowHeight(30);
     }
-private void armarCabeceraTabla(){
-    ArrayList <Object>filaCabecera=new ArrayList<>();
-    filaCabecera.add("ID");
-    filaCabecera.add("DNI");
-    filaCabecera.add("Nombre");
-    filaCabecera.add("Apellido");
-    filaCabecera.add("Especialidad");
-  
-    for(Object it:filaCabecera){
-        modelo.addColumn(it);
-    }
-    jTableEntrenadores.setModel(modelo);
-  }
 
-private DefaultTableModel cargaEntrenadores() {
-          
-   List<Entrenador> lista=entrenadorData.listarEntrenadores();
-   for(Entrenador m: lista){
-     modelo.addRow(new Object[] {m.getIdEntrenador() ,m.getDni() ,m.getNombre(), m.getApellido(), m.getEspecialidad()});  
-   }
-     return modelo;  
-     }
+    private void armarCabeceraTabla() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("ID");
+        filaCabecera.add("DNI");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Apellido");
+        filaCabecera.add("Especialidad");
 
-private void borrarFilaTabla(){
-    int indice=modelo.getRowCount()-1;
-    for (int i=indice; i>=0; i--){
-        modelo.removeRow(i);
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+        jTableEntrenadores.setModel(modelo);
     }
-   }
-  private DefaultTableModel cargaSocioPorNombre() {
-    borrarFilaTabla();  
-   List<Entrenador> lista=entrenadorData.listarEntrenadoresPorNombre(jTextApellido.getText());
-   for(Entrenador m: lista){
-       modelo.addRow(new Object[] {m.getIdEntrenador() ,m.getDni() ,m.getNombre(), m.getApellido(), m.getEspecialidad()});  
-   }
-     return modelo;  
-     }
-  
-  private DefaultTableModel cargaSocioPorEspecialidad() {
-   borrarFilaTabla();  
-   List<Entrenador> lista=entrenadorData.listarEntrenadoresPorEspecialidad(jTextEspecialidad.getText());
-   for(Entrenador m: lista){
-       modelo.addRow(new Object[] {m.getIdEntrenador() ,m.getDni() ,m.getNombre(), m.getApellido(), m.getEspecialidad()});  
-   }
-     return modelo;  
-     }
- 
+
+    private DefaultTableModel cargaEntrenadores() {
+
+        List<Entrenador> lista = entrenadorData.listarEntrenadores();
+        for (Entrenador m : lista) {
+            modelo.addRow(new Object[]{m.getIdEntrenador(), m.getDni(), m.getNombre(), m.getApellido(), m.getEspecialidad()});
+        }
+        return modelo;
+    }
+
+    private void borrarFilaTabla() {
+        int indice = modelo.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private DefaultTableModel cargaSocioPorNombre() {
+        borrarFilaTabla();
+        List<Entrenador> lista = entrenadorData.listarEntrenadoresPorNombre(jTextApellido.getText());
+        for (Entrenador m : lista) {
+            modelo.addRow(new Object[]{m.getIdEntrenador(), m.getDni(), m.getNombre(), m.getApellido(), m.getEspecialidad()});
+        }
+        return modelo;
+    }
+
+    private DefaultTableModel cargaSocioPorEspecialidad() {
+        borrarFilaTabla();
+        List<Entrenador> lista = entrenadorData.listarEntrenadoresPorEspecialidad(jTextEspecialidad.getText());
+        for (Entrenador m : lista) {
+            modelo.addRow(new Object[]{m.getIdEntrenador(), m.getDni(), m.getNombre(), m.getApellido(), m.getEspecialidad()});
+        }
+        return modelo;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,7 +124,7 @@ private void borrarFilaTabla(){
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -40, 560, 230));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Socio", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Entrenador", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
         jPanel2.setToolTipText("Buscar un Socio");
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.setName("Buscar"); // NOI18N
@@ -153,7 +156,6 @@ private void borrarFilaTabla(){
         jRadioCodigo.setForeground(new java.awt.Color(255, 255, 255));
         jRadioCodigo.setSelected(true);
         jRadioCodigo.setText("Por Nombre");
-        jRadioCodigo.setOpaque(false);
         jRadioCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioCodigoMouseClicked(evt);
@@ -168,7 +170,6 @@ private void borrarFilaTabla(){
         jRadioApellido.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jRadioApellido.setForeground(new java.awt.Color(255, 255, 255));
         jRadioApellido.setText("Por Especialidad");
-        jRadioApellido.setOpaque(false);
         jRadioApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioApellidoActionPerformed(evt);
@@ -253,8 +254,8 @@ private void borrarFilaTabla(){
         jTextEspecialidad.setText("");
         jTextApellido.setText("");
         jTextApellido.requestFocus();
-         borrarFilaTabla();
-         cargaEntrenadores();
+        borrarFilaTabla();
+        cargaEntrenadores();
     }//GEN-LAST:event_jRadioCodigoActionPerformed
 
     private void jRadioCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioCodigoMouseClicked
@@ -272,44 +273,48 @@ private void borrarFilaTabla(){
         jTextApellido.setText("");
         jTextEspecialidad.requestFocus();
         borrarFilaTabla();
-         cargaEntrenadores();
+        cargaEntrenadores();
     }//GEN-LAST:event_jRadioApellidoActionPerformed
 
     private void jTextApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyTyped
-        
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'a' || c>'z')evt.consume(); 
-        
+
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+
         //---------- Primer caracter en mayuscula---------------
-        String nuestroTexto=jTextApellido.getText(); 
-        if(nuestroTexto.length()> 0){
-            char primeraLetra=nuestroTexto.charAt(0);
-            nuestroTexto=Character.toUpperCase(primeraLetra)+ nuestroTexto.substring(1, nuestroTexto.length());
+        String nuestroTexto = jTextApellido.getText();
+        if (nuestroTexto.length() > 0) {
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra) + nuestroTexto.substring(1, nuestroTexto.length());
             jTextApellido.setText(nuestroTexto);
         }
-       //------------------------------------------------------ 
+        //------------------------------------------------------ 
     }//GEN-LAST:event_jTextApellidoKeyTyped
 
     private void jTextEspecialidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEspecialidadKeyTyped
-         char c=evt.getKeyChar(); /// para ingresar solo letras
-        if(c<'a' || c>'z')evt.consume(); 
+        char c = evt.getKeyChar(); /// para ingresar solo letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
         //---------- Primer caracter en mayuscula---------------
-        String nuestroTexto=jTextEspecialidad.getText(); 
-        if(nuestroTexto.length()> 0){
-            char primeraLetra=nuestroTexto.charAt(0);
-            nuestroTexto=Character.toUpperCase(primeraLetra)+ nuestroTexto.substring(1, nuestroTexto.length());
+        String nuestroTexto = jTextEspecialidad.getText();
+        if (nuestroTexto.length() > 0) {
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra) + nuestroTexto.substring(1, nuestroTexto.length());
             jTextEspecialidad.setText(nuestroTexto);
         }
     }//GEN-LAST:event_jTextEspecialidadKeyTyped
 
     private void jTextApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyReleased
-            cargaSocioPorNombre();
+        cargaSocioPorNombre();
     }//GEN-LAST:event_jTextApellidoKeyReleased
 
     private void jTextEspecialidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEspecialidadKeyReleased
-            cargaSocioPorEspecialidad();        // TODO add your handling code here:
+        cargaSocioPorEspecialidad();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextEspecialidadKeyReleased
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;

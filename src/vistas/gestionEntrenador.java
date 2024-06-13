@@ -54,7 +54,6 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         jTextCodigo = new javax.swing.JTextField();
         jTextDni = new javax.swing.JTextField();
         jTextNombre = new javax.swing.JTextField();
-        jLabelPorDni = new javax.swing.JLabel();
         jTextApellido = new javax.swing.JTextField();
         jTextEspecialidad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -157,20 +156,42 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
 
         jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
+        jTextNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextNombreFocusLost(evt);
+            }
+        });
+        jTextNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextNombreKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, 30));
-
-        jLabelPorDni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        jLabelPorDni.setToolTipText("Buscar por DNI");
-        jPanel1.add(jLabelPorDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 50, 30));
 
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
+        jTextApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextApellidoFocusLost(evt);
+            }
+        });
+        jTextApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextApellidoKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, 30));
 
         jTextEspecialidad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextEspecialidad.setForeground(new java.awt.Color(0, 51, 153));
+        jTextEspecialidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextEspecialidadFocusLost(evt);
+            }
+        });
         jPanel1.add(jTextEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 220, 30));
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +226,7 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         jTextApellido.setText("");
         jTextNombre.setText("");
         jTextEspecialidad.setText("");
-        jTextCodigo.setEnabled(true);
+//        jTextCodigo.setEnabled(true);
         entrenador = null;
 
     }
@@ -269,6 +290,7 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
                 entrenador.setEspecialidad(especialidad);
                 eData.modificarEntrenador(entrenador);
             }
+            jTextCodigo.setText(entrenador.getIdEntrenador()+"");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingresá carácteres válidos");
         }
@@ -279,12 +301,15 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         try {
             Integer dni = Integer.valueOf(jTextDni.getText());
             entrenador = eData.buscarEntrenadorPorDni(dni);
-            jTextCodigo.setText(entrenador.getIdEntrenador() + "");
-            jTextCodigo.setEnabled(false);
+            
             if (entrenador != null) {
-                jTextNombre.setText(entrenador.getApellido());
-                jTextApellido.setText(entrenador.getNombre());
+                jTextCodigo.setText(entrenador.getIdEntrenador() + "");
+                jTextApellido.setText(entrenador.getApellido());
+                jTextNombre.setText(entrenador.getNombre());
                 jTextEspecialidad.setText(entrenador.getEspecialidad());
+            }else{
+                limpiarCampos();
+                jTextDni.setText(dni+"");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "DNI incorrecto");
@@ -311,6 +336,32 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void jTextNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextNombreFocusLost
+        jTextNombre.setText(fomatoFrase(jTextNombre.getText()));
+    }//GEN-LAST:event_jTextNombreFocusLost
+
+    private void jTextApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextApellidoFocusLost
+        jTextApellido.setText(fomatoFrase(jTextApellido.getText()));
+    }//GEN-LAST:event_jTextApellidoFocusLost
+
+    private void jTextEspecialidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextEspecialidadFocusLost
+        jTextEspecialidad.setText(fomatoFrase(jTextEspecialidad.getText()));
+    }//GEN-LAST:event_jTextEspecialidadFocusLost
+
+    private void jTextNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNombreKeyTyped
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c==' '))){//(c < 'a' || c > 'z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextNombreKeyTyped
+
+    private void jTextApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyTyped
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c==' '))){//(c < 'a' || c > 'z')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextApellidoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -325,7 +376,6 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelEdad;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JLabel jLabelPorDni;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextApellido;
@@ -334,4 +384,24 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextEspecialidad;
     private javax.swing.JTextField jTextNombre;
     // End of variables declaration//GEN-END:variables
+    
+    //Utilidades
+    private String fomatoFrase(String palabra) {
+        if (!palabra.isEmpty()) {
+            palabra = palabra.trim();
+            palabra = palabra.toLowerCase();
+            char[] array = palabra.toCharArray();
+            array[0] = Character.toUpperCase(array[0]);
+            for (int i = 1; i < array.length; i++) {
+                if (array[i - 1] == ' ') {
+                    array[i] = Character.toUpperCase(array[i]);
+                }
+            }
+            palabra = "";
+            for (char i : array) {
+                palabra = palabra + i;
+            }
+        }
+        return palabra;
+    }
 }

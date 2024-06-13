@@ -23,6 +23,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
  * @author CCMEW
@@ -258,7 +259,7 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         
         //Validar membresia
         List<Membresia> listaM = mData.membresiasPorSocioYFecha(socioSelec.getIdSocio(),LDfAsis);
-        if(listaM.size()==0){
+        if(listaM.isEmpty()){
             JOptionPane.showMessageDialog(this, "El socio no cuenta con membresías activas para la fecha seleccionada.");
             return;
         }
@@ -287,29 +288,6 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         
         
     }//GEN-LAST:event_btnRegistrarAsistenciaActionPerformed
-
-    private void jDateFAsistenciaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFAsistenciaPropertyChange
-       
-        Date fAsis = jDateFAsistencia.getDate();
-        Date hoy = Date.from(Instant.now());
-        Date hoyMenos30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() - 30);
-        Date hoyMas30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() + 30);
-        
-        if (fAsis != null) {
-//            if (fAsis.before(hoyMenos30)) {
-//                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una antigüedad de más de 30 días.");
-//                jDateFAsistencia.setDate(hoy);
-//                return;
-//            }
-//            
-//            if (fAsis.after(hoyMas30)) {
-//                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una posterioridad de más de 30 días.");
-//                jDateFAsistencia.setDate(hoy);
-//                return;
-//            }ctualizarTabla();
-        actualizarTabla();}
-        
-    }//GEN-LAST:event_jDateFAsistenciaPropertyChange
 
     private void btnBorrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarAsistenciaActionPerformed
        
@@ -362,6 +340,10 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         //  -Actualiza tabla
         actualizarTabla();
     }//GEN-LAST:event_btnBorrarAsistenciaActionPerformed
+
+    private void jDateFAsistenciaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFAsistenciaPropertyChange
+        actualizarTabla();
+    }//GEN-LAST:event_jDateFAsistenciaPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -430,7 +412,7 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
             for (Socio aux : lista) {
                 modelo.addRow(new Object[]{aux.getDni(), aux.getApellido(), aux.getNombre()});
             }
-            if(lista.size()>0){
+            if(!lista.isEmpty()){
                 btnBorrarAsistencia.setEnabled(true);
             }
         }

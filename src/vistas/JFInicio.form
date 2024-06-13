@@ -104,7 +104,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuAltaMembresia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alta y renovaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="ABM"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuAltaMembresiaActionPerformed"/>

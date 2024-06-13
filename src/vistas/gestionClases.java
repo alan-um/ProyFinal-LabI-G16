@@ -61,12 +61,11 @@ public class gestionClases extends javax.swing.JInternalFrame {
         jLabelEdad = new javax.swing.JLabel();
         jLabelEmail = new javax.swing.JLabel();
         jTextCodigoClase = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelPorCodigo = new javax.swing.JLabel();
         jComboBoxHorario = new javax.swing.JComboBox<>();
         jTextCapacidad = new javax.swing.JTextField();
         jComboBoxCodigo1 = new javax.swing.JComboBox<>();
         jComboBoxCodigo2 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -114,13 +113,14 @@ public class gestionClases extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 590, 120, 70));
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 120, 40));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 120, 40));
 
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,13 +156,6 @@ public class gestionClases extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextCodigoClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 100, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clases.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, -30, 530, 230));
-
-        jLabelPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        jLabelPorCodigo.setToolTipText("Buscar Por Código");
-        jPanel1.add(jLabelPorCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 50, 30));
-
         jComboBoxHorario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxHorario.setForeground(new java.awt.Color(0, 0, 153));
         jComboBoxHorario.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +187,9 @@ public class gestionClases extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jComboBoxCodigo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 300, 30));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clases.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, -30, 530, 230));
+
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
 
@@ -216,7 +212,8 @@ public class gestionClases extends javax.swing.JInternalFrame {
         if (clase != null) {
             jComboBoxHorario.removeItem(clase.getHorario());
         }
-        jComboBoxHorario.setSelectedIndex(-1);
+        jComboBoxHorario.removeAllItems();
+        cargarHorarios();
         jComboBoxCodigo1.setSelectedIndex(-1);
         jComboBoxCodigo2.setSelectedIndex(-1);
         jTextCapacidad.setText("");
@@ -302,6 +299,8 @@ public class gestionClases extends javax.swing.JInternalFrame {
                 clase.setCapacidad(capacidad);
                 cData.modificarClase(clase);
             }
+            jTextCodigoClase.setText(clase.getIdClase()+"");
+            jTextCodigoClase.setEnabled(false);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingresá carácteres válidos");
         }
@@ -361,7 +360,6 @@ public class gestionClases extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JLabel jLabelPorCodigo;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextCapacidad;

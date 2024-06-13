@@ -40,6 +40,8 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jTableSocios.getColumnModel().getColumn(6).setPreferredWidth(100);
         jTableSocios.setRowHeight(30);
         cargaSocios();
+//        jTextCodigo.setFocusable(true);
+//        jTextCodigo.requestFocus(true);
 
     }
 
@@ -80,11 +82,14 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         if (!jTextCodigo.getText().equals("")) {
             Socio m = socioData.buscarSocio(Integer.parseInt(jTextCodigo.getText()));
             if (m == null) {
-                JOptionPane.showMessageDialog(this, "No se encuentra el ID buscado");
+                jTextCodigo.setText("");
+                cargaSocios();
             } else {
 
                 modelo.addRow(new Object[]{m.getIdSocio(), m.getDni(), m.getNombre(), m.getApellido(), m.getEdad(), m.getCorreo(), m.getTelefono()});
             }
+        }else{
+            cargaSocios();
         }
         return modelo;
     }
@@ -263,13 +268,16 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jRadioApellido.setSelected(false);
         jTextApellido.setVisible(false);
         jTextApellido.setEnabled(false);
+        jTextCodigo.setFocusable(true);
+        jTextCodigo.requestFocus(true);
         jTextCodigo.setVisible(true);
         jTextCodigo.setEnabled(true);
-        jTextApellido.setText("");
         jTextCodigo.setText("");
+        jTextApellido.setText("");
+        
         borrarFilaTabla();
         cargaSocios();
-        jTextCodigo.requestFocus(true);
+        
     }//GEN-LAST:event_jRadioCodigoActionPerformed
 
     private void jRadioCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioCodigoMouseClicked
@@ -278,9 +286,10 @@ public class listadoSocios extends javax.swing.JInternalFrame {
 
     private void jRadioApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioApellidoActionPerformed
         jTextApellido.setVisible(true);
-        jTextApellido.requestFocus(true);
+        
 
         jTextApellido.setFocusable(true);
+        jTextApellido.requestFocus(true);
         jRadioCodigo.setSelected(false);
         jRadioApellido.setSelected(true);
         jTextCodigo.setVisible(false);

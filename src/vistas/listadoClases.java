@@ -31,10 +31,10 @@ public class listadoClases extends javax.swing.JInternalFrame {
         entrenaData= new EntrenadorData();
         armarCabeceraTabla();//4
          jTableClases.getColumnModel().getColumn(0).setPreferredWidth(80);
-         jTableClases.getColumnModel().getColumn(1).setPreferredWidth(350);
-         jTableClases.getColumnModel().getColumn(2).setPreferredWidth(80);
-         jTableClases.getColumnModel().getColumn(3).setPreferredWidth(150);
-         jTableClases.getColumnModel().getColumn(4).setPreferredWidth(150);
+         jTableClases.getColumnModel().getColumn(1).setPreferredWidth(200);
+         jTableClases.getColumnModel().getColumn(2).setPreferredWidth(250);
+         jTableClases.getColumnModel().getColumn(3).setPreferredWidth(100);
+         jTableClases.getColumnModel().getColumn(4).setPreferredWidth(100);
          jTableClases.setRowHeight(30);
 
         
@@ -96,7 +96,7 @@ private DefaultTableModel cargaClases() {
           
    List<Clase> lista=claseData.listarClases();
    for(Clase m: lista){
-     modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador().getIdEntrenador(), m.getHorario(), m.getCapacidad()});  
+     modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador(), m.getHorario(), m.getCapacidad()});  
    }
      return modelo;  
      }
@@ -105,7 +105,7 @@ private DefaultTableModel cargaClasePorNombre() {
    borrarFilaTabla();  
    List<Clase> lista=claseData.listarClasesPorNombre(jTextApellido.getText());
    for(Clase m: lista){
-      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador().getIdEntrenador(), m.getHorario(), m.getCapacidad()});  
+      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador(), m.getHorario(), m.getCapacidad()});  
    }
      return modelo;  
      }
@@ -117,7 +117,7 @@ private DefaultTableModel cargaClasePorNombre() {
    if (selec!=null) {
     List<Clase> lista=claseData.listarClasesPorEntrenador(selec);
    for(Clase m: lista){
-      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador().getIdEntrenador(), m.getHorario(), m.getCapacidad()});  
+      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador(), m.getHorario(), m.getCapacidad()});  
    }
    }
      return modelo;  
@@ -129,7 +129,7 @@ private DefaultTableModel cargaClasePorNombre() {
     if (selec!=null) {
     List<Clase> lista=claseData.listarClasesPorHorario(selec);
    for(Clase m: lista){
-      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador().getIdEntrenador(), m.getHorario(), m.getCapacidad()});  
+      modelo.addRow(new Object[] {m.getIdClase() ,m.getNombre(),m.getEntrenador(), m.getHorario(), m.getCapacidad()});  
    }
     }
      return modelo;  

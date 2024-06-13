@@ -159,7 +159,7 @@ public class JFInicio extends javax.swing.JFrame {
         jMenuMembresias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconMembresia.png"))); // NOI18N
         jMenuMembresias.setText("Membresias");
 
-        jMenuAltaMembresia.setText("Alta y renovación");
+        jMenuAltaMembresia.setText("ABM");
         jMenuAltaMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuAltaMembresiaActionPerformed(evt);

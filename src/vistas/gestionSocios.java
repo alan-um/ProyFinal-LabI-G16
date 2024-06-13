@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author CCMEW
  */
 public class gestionSocios extends javax.swing.JInternalFrame {
+
     private SocioData sData = new SocioData();
     private Socio socio = null;
 
@@ -22,10 +23,10 @@ public class gestionSocios extends javax.swing.JInternalFrame {
      */
     public gestionSocios() {
         initComponents();
-       int x=JFInicio.escritorio.getWidth()- this.getWidth();
-        int y=JFInicio.escritorio.getHeight() - this.getHeight();
-        setLocation(x/2, y/2);
-         jTextCodigo.setEnabled(false);
+        int x = JFInicio.escritorio.getWidth() - this.getWidth();
+        int y = JFInicio.escritorio.getHeight() - this.getHeight();
+        setLocation(x / 2, y / 2);
+        jTextCodigo.setEnabled(false);
     }
 
     /**
@@ -53,7 +54,6 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         jTextTelefono = new javax.swing.JTextField();
         jTextCodigo = new javax.swing.JTextField();
         jTextDni = new javax.swing.JTextField();
-        jLabelPorDni1 = new javax.swing.JLabel();
         jTextNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jTextApellido = new javax.swing.JTextField();
@@ -182,12 +182,13 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 120, 30));
 
-        jLabelPorDni1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        jLabelPorDni1.setToolTipText("Buscar por DNI");
-        jPanel1.add(jLabelPorDni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 50, 70));
-
         jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
+        jTextNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextNombreFocusLost(evt);
+            }
+        });
         jTextNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextNombreActionPerformed(evt);
@@ -200,6 +201,7 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 260, 30));
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +212,16 @@ public class gestionSocios extends javax.swing.JInternalFrame {
 
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
+        jTextApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextApellidoFocusLost(evt);
+            }
+        });
+        jTextApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextApellidoKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 260, 30));
 
         jTextEdad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -290,36 +302,38 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void limpiarCampos(){
-       jTextCodigo.setText("");
-       jTextDni.setText("");
-       jTextApellido.setText("");
-       jTextNombre.setText("");
-       jTextEdad.setText("");
-       jTextEmail.setText("");
-       jTextTelefono.setText("");
-       jTextCodigo.setEnabled(true);
+    private void limpiarCampos() {
+        jTextCodigo.setText("");
+        jTextDni.setText("");
+        jTextApellido.setText("");
+        jTextNombre.setText("");
+        jTextEdad.setText("");
+        jTextEmail.setText("");
+        jTextTelefono.setText("");
+        jTextCodigo.setEnabled(false);
         socio = null;
-       
+
     }
-    
+
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-     limpiarCampos();
+        limpiarCampos();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     // limita que solo se ingresen 8 caracteres
     private void jTextDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextDniKeyTyped
-        
-        if(jTextDni.getText().length()>=8){
+
+        if (jTextDni.getText().length() >= 8) {
             evt.consume();
         }
-        char c=evt.getKeyChar();
-        if(c<'0' || c>'9')evt.consume(); 
-        
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_jTextDniKeyTyped
 
     private void jTextDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDniActionPerformed
@@ -327,30 +341,32 @@ public class gestionSocios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextDniActionPerformed
 
     private void jTextCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCodigoKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();         // TODO add your handling code here:
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (c < '0' || c > '9')
+            evt.consume();         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCodigoKeyTyped
 
     private void jTextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdadKeyTyped
- char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();         // TODO add your handling code here:
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (c < '0' || c > '9')
+            evt.consume();         // TODO add your handling code here:
     }//GEN-LAST:event_jTextEdadKeyTyped
 
     private void jTextTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextTelefonoKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume(); 
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (jTextTelefono.getText().length() >= 10) {
+            evt.consume();
+        }
+        if (c < '0' || c > '9')
+            evt.consume();
     }//GEN-LAST:event_jTextTelefonoKeyTyped
 
     private void jTextNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNombreKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(( c< 'a' || c> 'z')) evt.consume(); 
-        String nuestroTexto=jTextNombre.getText(); 
-        if(nuestroTexto.length()> 0){
-            char primeraLetra=nuestroTexto.charAt(0);
-            nuestroTexto=Character.toUpperCase(primeraLetra)+ nuestroTexto.substring(1, nuestroTexto.length());
-            jTextNombre.setText(nuestroTexto);
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c==' '))){//(c < 'a' || c > 'z')) {
+            evt.consume();
         }
-       
+
     }//GEN-LAST:event_jTextNombreKeyTyped
 
     private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreActionPerformed
@@ -368,91 +384,112 @@ public class gestionSocios extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-            try{
-             Integer dni = Integer.parseInt(jTextDni.getText()); 
-             String nombre = jTextNombre.getText();
-             String apellido = jTextApellido.getText();
-             Integer edad = Integer.parseInt(jTextEdad.getText());
-             String email = jTextEmail.getText();
-             String tel = jTextTelefono.getText();
-            
-             if(dni==null || apellido.isEmpty() || nombre.isEmpty() || email.isEmpty() || tel.isEmpty()){
-                 JOptionPane.showMessageDialog(this, "Todos los campos deben completarse");
-                 return;
-             }
-             
-             if(dni<1){
-                 JOptionPane.showMessageDialog(this, "El DNI ingresado es incorrecto");
-                 return;
-             }
-             
-             if(socio==null){
-                 socio = new Socio(dni, nombre, apellido, edad, email, tel,true);
-                 sData.guardarSocio(socio);
-             }else {
-                 socio.setDni(dni);
-                 socio.setNombre(nombre);
-                 socio.setApellido(apellido);
-                 socio.setEdad(edad);
-                 socio.setCorreo(email);
-                 socio.setTelefono(tel);
+        try {
+            Integer dni = Integer.parseInt(jTextDni.getText());
+            String nombre = jTextNombre.getText();
+            String apellido = jTextApellido.getText();
+            Integer edad = Integer.parseInt(jTextEdad.getText());
+            String email = jTextEmail.getText();
+            String tel = jTextTelefono.getText();
 
-                 sData.modificarSocio(socio);
-             }
-        } catch(NumberFormatException e){
-             JOptionPane.showMessageDialog(this, "Ingresa caracteres válidos");
+            if (dni == null || apellido.isEmpty() || nombre.isEmpty() || email.isEmpty() || tel.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben completarse");
+                return;
+            }
+
+            if (dni < 1) {
+                JOptionPane.showMessageDialog(this, "El DNI ingresado es incorrecto");
+                return;
+            }
+
+            if (socio == null) {
+                socio = new Socio(dni, nombre, apellido, edad, email, tel, true);
+                sData.guardarSocio(socio);
+            } else {
+                socio.setDni(dni);
+                socio.setNombre(nombre);
+                socio.setApellido(apellido);
+                socio.setEdad(edad);
+                socio.setCorreo(email);
+                socio.setTelefono(tel);
+
+                sData.modificarSocio(socio);
+            }
+            jTextCodigo.setText(socio.getIdSocio()+"");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa caracteres válidos");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-         try {
-//              jTextCodigo.setText(socio.getIdSocio() + "");
-//              jTextCodigo.setEnabled(false);
-            Integer dni = Integer.valueOf(jTextDni.getText()); 
+        try {
+            Integer dni = Integer.valueOf(jTextDni.getText());
             socio = sData.buscarSocioPorDni(dni);
-             
-            if(socio!=null){
+
+            if (socio != null) {
+                jTextCodigo.setText(socio.getIdSocio()+"");
                 jTextApellido.setText(socio.getApellido());
                 jTextNombre.setText(socio.getNombre());
-                jTextEdad.setText(socio.getEdad()+"");
+                jTextEdad.setText(socio.getEdad() + "");
                 jTextEmail.setText(socio.getCorreo());
                 jTextTelefono.setText(socio.getTelefono());
-                
+
+            }else{
+                limpiarCampos();
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
+             limpiarCampos();
             JOptionPane.showMessageDialog(this, "Dni incorrecto");
+           
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if(socio!=null){
-            int response = JOptionPane.showConfirmDialog(this, 
-            "Está seguro que quiere eliminar un socio", 
-            "Confirmar eliminación", 
-            JOptionPane.YES_NO_OPTION, 
-            JOptionPane.QUESTION_MESSAGE);
+        if (socio != null) {
+            int response = JOptionPane.showConfirmDialog(this,
+                    "Está seguro que quiere eliminar un socio",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
 
-        if (response == JOptionPane.YES_OPTION) {
-            sData.eliminarSocio(socio.getIdSocio());
-            limpiarCampos();
+            if (response == JOptionPane.YES_OPTION) {
+                sData.eliminarSocio(socio.getIdSocio());
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Eliminación cancelada");
+            JOptionPane.showMessageDialog(this, "No hay un socio seleccionado");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "No hay un socio seleccionado");
-    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jTextEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextEmailFocusLost
         // TODO add your handling code here:
         String mail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        if(!jTextEmail.getText().matches(mail)){
-             JOptionPane.showMessageDialog(this, "Ingresa una dirección de correo válida.");
+        if (!jTextEmail.getText().matches(mail)) {
+            JOptionPane.showMessageDialog(this, "Ingresa una dirección de correo válida.");
             jTextEmail.requestFocus();
         }
     }//GEN-LAST:event_jTextEmailFocusLost
+
+    private void jTextApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyTyped
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c==' '))){
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_jTextApellidoKeyTyped
+
+    private void jTextApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextApellidoFocusLost
+        jTextApellido.setText(fomatoFrase(jTextApellido.getText()));
+    }//GEN-LAST:event_jTextApellidoFocusLost
+
+    private void jTextNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextNombreFocusLost
+        jTextNombre.setText(fomatoFrase(jTextNombre.getText()));
+        
+    }//GEN-LAST:event_jTextNombreFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -473,7 +510,6 @@ public class gestionSocios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelPorDni;
-    private javax.swing.JLabel jLabelPorDni1;
     private javax.swing.JLabel jLabelPorDni2;
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelTelefono1;
@@ -488,4 +524,25 @@ public class gestionSocios extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextNombre;
     private javax.swing.JTextField jTextTelefono;
     // End of variables declaration//GEN-END:variables
+    
+    //Utilidades
+    private String fomatoFrase(String palabra) {
+        if (!palabra.isEmpty()) {
+            palabra = palabra.trim();
+            palabra = palabra.toLowerCase();
+            char[] array = palabra.toCharArray();
+            array[0] = Character.toUpperCase(array[0]);
+            for (int i = 1; i < array.length; i++) {
+                if (array[i - 1] == ' ') {
+                    array[i] = Character.toUpperCase(array[i]);
+                }
+            }
+            palabra = "";
+            for (char i : array) {
+                palabra = palabra + i;
+            }
+        }
+        return palabra;
+    }
+
 }

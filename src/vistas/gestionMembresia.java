@@ -348,6 +348,15 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No ha ingresado el costo de la membresía.");
             return;
         } else {
+            
+            Pattern p = Pattern.compile("^[+]?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)?$");
+            Matcher m = p.matcher(jTextCosto.getText());
+            if (!m.matches()) {
+//                JOptionPane.showMessageDialog(this, "El monto ingresado no es válido.");
+                jTextCosto.requestFocus();
+                return;
+            }
+        
             costo = Double.parseDouble(jTextCosto.getText());
         }
 
@@ -384,6 +393,7 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
             Matcher m = p.matcher(jTextCosto.getText());
             if (!m.matches()) {
                 JOptionPane.showMessageDialog(this, "El monto ingresado no es válido.");
+//                jTextCosto.setText("");
                 jTextCosto.requestFocus();
                 return;
             }
