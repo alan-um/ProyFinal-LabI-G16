@@ -5,7 +5,10 @@
  */
 package vistas;
 
+import accesoADatos.EntrenadorData;
+import entidades.Entrenador;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,16 +16,19 @@ import javax.swing.ImageIcon;
  */
 public class gestionEntrenador extends javax.swing.JInternalFrame {
 
+    private EntrenadorData eData = new EntrenadorData();
+    private Entrenador entrenador = null;
+
     /**
      * Creates new form gestionSocios
      */
     public gestionEntrenador() {
         initComponents();
-       int x=JFInicio.escritorio.getWidth()- this.getWidth();
-        int y=JFInicio.escritorio.getHeight() - this.getHeight();
-        setLocation(x/2, y/2);
+        int x = JFInicio.escritorio.getWidth() - this.getWidth();
+        int y = JFInicio.escritorio.getHeight() - this.getHeight();
+        setLocation(x / 2, y / 2);
         jTextCodigo.setEnabled(false);
-        
+
     }
 
     /**
@@ -48,10 +54,11 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         jTextCodigo = new javax.swing.JTextField();
         jTextDni = new javax.swing.JTextField();
         jTextNombre = new javax.swing.JTextField();
-        jTextApellido = new javax.swing.JTextField();
-        jTextEdad = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabelPorDni = new javax.swing.JLabel();
+        jTextApellido = new javax.swing.JTextField();
+        jTextEspecialidad = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -74,10 +81,20 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, -1, 70));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconSalir.png"))); // NOI18N
@@ -142,20 +159,28 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
         jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, 30));
 
+        jLabelPorDni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        jLabelPorDni.setToolTipText("Buscar por DNI");
+        jPanel1.add(jLabelPorDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 50, 30));
+
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
         jPanel1.add(jTextApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, 30));
 
-        jTextEdad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEdad.setForeground(new java.awt.Color(0, 51, 153));
-        jPanel1.add(jTextEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 220, 30));
+        jTextEspecialidad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jTextEspecialidad.setForeground(new java.awt.Color(0, 51, 153));
+        jPanel1.add(jTextEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 220, 30));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 120, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tituloEntrenadores.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, -40, 560, 230));
-
-        jLabelPorDni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        jLabelPorDni.setToolTipText("Buscar por DNI");
-        jPanel1.add(jLabelPorDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 50, 30));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -174,33 +199,36 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void limpiarCampos(){
-       jTextCodigo.setText(" ");
-       jTextDni.setText(" ");
-       jTextApellido.setText(" ");
-       jTextNombre.setText(" ");
-       jTextEdad.setText(" ");
-      
-       
+    private void limpiarCampos() {
+        jTextCodigo.setText("");
+        jTextDni.setText("");
+        jTextApellido.setText("");
+        jTextNombre.setText("");
+        jTextEspecialidad.setText("");
+        jTextCodigo.setEnabled(true);
+        entrenador = null;
+
     }
-    
+
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-     limpiarCampos();
+        limpiarCampos();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     // limita que solo se ingresen 8 caracteres
     private void jTextDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextDniKeyTyped
-        
-        if(jTextDni.getText().length()>=8){  //maximo de caracteres
+
+        if (jTextDni.getText().length() >= 8) {  //maximo de caracteres
             evt.consume();
         }
-        char c=evt.getKeyChar();
-        if(c<'0' || c>'9')evt.consume(); 
-        
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_jTextDniKeyTyped
 
     private void jTextCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodigoActionPerformed
@@ -208,12 +236,84 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextCodigoActionPerformed
 
     private void jLabelCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabelCodigoKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();          // TODO add your handling code here:
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (c < '0' || c > '9')
+            evt.consume();          // TODO add your handling code here:
     }//GEN-LAST:event_jLabelCodigoKeyTyped
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer dni = Integer.parseInt(jTextDni.getText());
+            String nombre = jTextNombre.getText();
+            String apellido = jTextApellido.getText();
+            String especialidad = jTextEspecialidad.getText();
+
+            if (dni == null || apellido.isEmpty() || nombre.isEmpty() || especialidad.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben completarse");
+                return;
+            }
+
+            if (dni < 1) {
+                JOptionPane.showMessageDialog(this, "El DNI ingresado es incorrecto");
+                return;
+            }
+
+            if (entrenador == null) {
+                entrenador = new Entrenador(dni, nombre, apellido, especialidad, true);
+                eData.guardarEntrenador(entrenador);
+            } else {
+                entrenador.setDni(dni);
+                entrenador.setNombre(nombre);
+                entrenador.setApellido(apellido);
+                entrenador.setEspecialidad(especialidad);
+                eData.modificarEntrenador(entrenador);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresá carácteres válidos");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer dni = Integer.valueOf(jTextDni.getText());
+            entrenador = eData.buscarEntrenadorPorDni(dni);
+            jTextCodigo.setText(entrenador.getIdEntrenador() + "");
+            jTextCodigo.setEnabled(false);
+            if (entrenador != null) {
+                jTextNombre.setText(entrenador.getApellido());
+                jTextApellido.setText(entrenador.getNombre());
+                jTextEspecialidad.setText(entrenador.getEspecialidad());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "DNI incorrecto");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (entrenador != null) {
+             int response = JOptionPane.showConfirmDialog(this, 
+            "Está seguro que quiere eliminar un entrenador", 
+            "Confirmar eliminación", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            eData.eliminarEntrenador(entrenador.getIdEntrenador());
+            limpiarCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Eliminación cancelada");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay un entrenador seleccionado");
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
@@ -231,7 +331,7 @@ public class gestionEntrenador extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextApellido;
     private javax.swing.JTextField jTextCodigo;
     private javax.swing.JTextField jTextDni;
-    private javax.swing.JTextField jTextEdad;
+    private javax.swing.JTextField jTextEspecialidad;
     private javax.swing.JTextField jTextNombre;
     // End of variables declaration//GEN-END:variables
 }

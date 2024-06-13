@@ -85,5 +85,27 @@ public class Entrenador {
     public String toString() {
         return dni + " - " + apellido + ", " + nombre;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + this.idEntrenador;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Entrenador other = (Entrenador) obj;
+        return this.idEntrenador == other.idEntrenador;
+    }
     
 }

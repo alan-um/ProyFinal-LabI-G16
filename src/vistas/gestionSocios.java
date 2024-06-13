@@ -5,11 +5,17 @@
  */
 package vistas;
 
+import accesoADatos.SocioData;
+import entidades.Socio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author CCMEW
  */
 public class gestionSocios extends javax.swing.JInternalFrame {
+    private SocioData sData = new SocioData();
+    private Socio socio = null;
 
     /**
      * Creates new form gestionSocios
@@ -47,13 +53,21 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         jTextTelefono = new javax.swing.JTextField();
         jTextCodigo = new javax.swing.JTextField();
         jTextDni = new javax.swing.JTextField();
+        jLabelPorDni1 = new javax.swing.JLabel();
         jTextNombre = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jTextApellido = new javax.swing.JTextField();
         jTextEdad = new javax.swing.JTextField();
         jTextEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabelPorDni = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
+        jLabelPorDni = new javax.swing.JLabel();
+        btnNuevo1 = new javax.swing.JButton();
+        jLabelPorDni2 = new javax.swing.JLabel();
+        btnGuardar1 = new javax.swing.JButton();
+        btnSalir1 = new javax.swing.JButton();
+        jLabelTelefono1 = new javax.swing.JLabel();
+        jLabelTelefono2 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -75,11 +89,21 @@ public class gestionSocios extends javax.swing.JInternalFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, -1, 70));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, 70));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, -1, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconSalir.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -93,7 +117,7 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         jLabelTelefono.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelTelefono.setForeground(new java.awt.Color(255, 255, 255));
         jLabelTelefono.setText("TELEFONO:");
-        jPanel1.add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 120, 40));
+        jPanel1.add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 120, 40));
 
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,6 +182,10 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jTextDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 120, 30));
 
+        jLabelPorDni1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        jLabelPorDni1.setToolTipText("Buscar por DNI");
+        jPanel1.add(jLabelPorDni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 50, 70));
+
         jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextNombre.setForeground(new java.awt.Color(0, 51, 153));
         jTextNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +199,14 @@ public class gestionSocios extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 260, 30));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 120, 50));
 
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
@@ -187,17 +223,58 @@ public class gestionSocios extends javax.swing.JInternalFrame {
 
         jTextEmail.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextEmail.setForeground(new java.awt.Color(0, 51, 153));
+        jTextEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextEmailFocusLost(evt);
+            }
+        });
         jPanel1.add(jTextEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, 260, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/titulo.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 530, 230));
 
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
+        jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
+
         jLabelPorDni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         jLabelPorDni.setToolTipText("Buscar por DNI");
         jPanel1.add(jLabelPorDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 50, 30));
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
-        jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
+        btnNuevo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
+        btnNuevo1.setText("Nuevo");
+        btnNuevo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnNuevo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 120, 70));
+
+        jLabelPorDni2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        jLabelPorDni2.setToolTipText("Buscar por DNI");
+        jPanel1.add(jLabelPorDni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 50, 30));
+
+        btnGuardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
+        btnGuardar1.setText("Guardar");
+        jPanel1.add(btnGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, 70));
+
+        btnSalir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconSalir.png"))); // NOI18N
+        btnSalir1.setText("Salir");
+        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 600, 120, 70));
+
+        jLabelTelefono1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelTelefono1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTelefono1.setText("TELEFONO:");
+        jPanel1.add(jLabelTelefono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 120, 40));
+
+        jLabelTelefono2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelTelefono2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTelefono2.setText("TELEFONO:");
+        jPanel1.add(jLabelTelefono2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,13 +291,15 @@ public class gestionSocios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiarCampos(){
-       jTextCodigo.setText(" ");
-       jTextDni.setText(" ");
-       jTextApellido.setText(" ");
-       jTextNombre.setText(" ");
-       jTextEdad.setText(" ");
-       jTextEmail.setText(" ");
-       jTextTelefono.setText(" ");
+       jTextCodigo.setText("");
+       jTextDni.setText("");
+       jTextApellido.setText("");
+       jTextNombre.setText("");
+       jTextEdad.setText("");
+       jTextEmail.setText("");
+       jTextTelefono.setText("");
+       jTextCodigo.setEnabled(true);
+        socio = null;
        
     }
     
@@ -278,12 +357,113 @@ public class gestionSocios extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNombreActionPerformed
 
+    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevo1ActionPerformed
+
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalir1ActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+            try{
+             Integer dni = Integer.parseInt(jTextDni.getText()); 
+             String nombre = jTextNombre.getText();
+             String apellido = jTextApellido.getText();
+             Integer edad = Integer.parseInt(jTextEdad.getText());
+             String email = jTextEmail.getText();
+             String tel = jTextTelefono.getText();
+            
+             if(dni==null || apellido.isEmpty() || nombre.isEmpty() || email.isEmpty() || tel.isEmpty()){
+                 JOptionPane.showMessageDialog(this, "Todos los campos deben completarse");
+                 return;
+             }
+             
+             if(dni<1){
+                 JOptionPane.showMessageDialog(this, "El DNI ingresado es incorrecto");
+                 return;
+             }
+             
+             if(socio==null){
+                 socio = new Socio(dni, nombre, apellido, edad, email, tel,true);
+                 sData.guardarSocio(socio);
+             }else {
+                 socio.setDni(dni);
+                 socio.setNombre(nombre);
+                 socio.setApellido(apellido);
+                 socio.setEdad(edad);
+                 socio.setCorreo(email);
+                 socio.setTelefono(tel);
+
+                 sData.modificarSocio(socio);
+             }
+        } catch(NumberFormatException e){
+             JOptionPane.showMessageDialog(this, "Ingresa caracteres válidos");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+         try {
+//              jTextCodigo.setText(socio.getIdSocio() + "");
+//              jTextCodigo.setEnabled(false);
+            Integer dni = Integer.valueOf(jTextDni.getText()); 
+            socio = sData.buscarSocioPorDni(dni);
+             
+            if(socio!=null){
+                jTextApellido.setText(socio.getApellido());
+                jTextNombre.setText(socio.getNombre());
+                jTextEdad.setText(socio.getEdad()+"");
+                jTextEmail.setText(socio.getCorreo());
+                jTextTelefono.setText(socio.getTelefono());
+                
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Dni incorrecto");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(socio!=null){
+            int response = JOptionPane.showConfirmDialog(this, 
+            "Está seguro que quiere eliminar un socio", 
+            "Confirmar eliminación", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            sData.eliminarSocio(socio.getIdSocio());
+            limpiarCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Eliminación cancelada");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay un socio seleccionado");
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jTextEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextEmailFocusLost
+        // TODO add your handling code here:
+        String mail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if(!jTextEmail.getText().matches(mail)){
+             JOptionPane.showMessageDialog(this, "Ingresa una dirección de correo válida.");
+            jTextEmail.requestFocus();
+        }
+    }//GEN-LAST:event_jTextEmailFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevo1;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnSalir1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelCodigo;
@@ -293,7 +473,11 @@ public class gestionSocios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelPorDni;
+    private javax.swing.JLabel jLabelPorDni1;
+    private javax.swing.JLabel jLabelPorDni2;
     private javax.swing.JLabel jLabelTelefono;
+    private javax.swing.JLabel jLabelTelefono1;
+    private javax.swing.JLabel jLabelTelefono2;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextApellido;

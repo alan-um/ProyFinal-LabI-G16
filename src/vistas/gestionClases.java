@@ -5,11 +5,24 @@
  */
 package vistas;
 
+import accesoADatos.ClaseData;
+import accesoADatos.EntrenadorData;
+import entidades.Clase;
+import entidades.Entrenador;
+import java.time.LocalTime;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author CCMEW
  */
 public class gestionClases extends javax.swing.JInternalFrame {
+
+    private ClaseData cData = new ClaseData();
+    private Clase clase = null;
+    private EntrenadorData eData;
+    private Entrenador entrenador;
 
     /**
      * Creates new form gestionSocios
@@ -19,6 +32,11 @@ public class gestionClases extends javax.swing.JInternalFrame {
         int x = JFInicio.escritorio.getWidth() - this.getWidth();
         int y = JFInicio.escritorio.getHeight() - this.getHeight();
         setLocation(x / 2, y / 2);
+        //  eLista = eData.listarEntrenadores();
+        eData = new EntrenadorData();
+        cargarNombres();
+        cargarHorarios();
+        cargarCodEntrenador();
     }
 
     /**
@@ -36,6 +54,7 @@ public class gestionClases extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabelNombre = new javax.swing.JLabel();
         jLabelCodigo = new javax.swing.JLabel();
         jLabelApellido = new javax.swing.JLabel();
@@ -70,10 +89,20 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 540, -1, 70));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconSalir.png"))); // NOI18N
@@ -84,6 +113,14 @@ public class gestionClases extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 590, 120, 70));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 120, 40));
 
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,7 +134,7 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
         jLabelApellido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelApellido.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelApellido.setText("CÓDIGO ENTRENADOR:");
+        jLabelApellido.setText("ENTRENADOR:");
         jPanel1.add(jLabelApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 200, 40));
 
         jLabelEdad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -128,6 +165,11 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
         jComboBoxHorario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxHorario.setForeground(new java.awt.Color(0, 0, 153));
+        jComboBoxHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxHorarioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 120, 30));
 
         jTextCapacidad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -136,11 +178,21 @@ public class gestionClases extends javax.swing.JInternalFrame {
 
         jComboBoxCodigo1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxCodigo1.setForeground(new java.awt.Color(0, 0, 153));
+        jComboBoxCodigo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCodigo1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxCodigo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 300, 30));
 
         jComboBoxCodigo2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxCodigo2.setForeground(new java.awt.Color(0, 0, 153));
-        jPanel1.add(jComboBoxCodigo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 120, 30));
+        jComboBoxCodigo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCodigo2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxCodigo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 300, 30));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -160,10 +212,16 @@ public class gestionClases extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiarCampos() {
-        jTextCodigoClase.setText(" ");
-      
-        jComboBoxHorario.setSelectedItem(0);
-        jTextCapacidad.setText(" ");
+        jTextCodigoClase.setText("");
+        if (clase != null) {
+            jComboBoxHorario.removeItem(clase.getHorario());
+        }
+        jComboBoxHorario.setSelectedIndex(-1);
+        jComboBoxCodigo1.setSelectedIndex(-1);
+        jComboBoxCodigo2.setSelectedIndex(-1);
+        jTextCapacidad.setText("");
+        jTextCodigoClase.setEnabled(true);
+        clase = null;
 
     }
 
@@ -180,16 +238,122 @@ public class gestionClases extends javax.swing.JInternalFrame {
         if (c < '0' || c > '9') {
             evt.consume();         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCodigoClaseKeyTyped
-  }
+    }
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        try {
+            Integer codigo = Integer.valueOf(jTextCodigoClase.getText());
+            clase = cData.buscarClase(codigo);
+            if (clase != null) {
+                jTextCodigoClase.setText(clase.getIdClase() + "");
+                jTextCodigoClase.setEnabled(false);
+                jComboBoxCodigo1.setSelectedItem(clase.getNombre());
+                jComboBoxCodigo2.setSelectedItem((Entrenador) clase.getEntrenador());
+                jComboBoxHorario.addItem(clase.getHorario());
+                jComboBoxHorario.setSelectedItem(clase.getHorario());
+                jTextCapacidad.setText(clase.getCapacidad() + "");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Código de clase incorrecto");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (clase != null) {
+            int response = JOptionPane.showConfirmDialog(this, 
+            "Está seguro que quiere eliminar una clase", 
+            "Confirmar eliminación", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            cData.eliminarClase(clase.getIdClase());
+            limpiarCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Eliminación cancelada");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay una clase seleccionada");
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+        try {
+            // Integer codigo = Integer.parseInt(jTextCodigoClase.getText());
+            String c1 = (String) jComboBoxCodigo1.getSelectedItem(); //nombre clase
+            Entrenador c2 = (Entrenador) jComboBoxCodigo2.getSelectedItem(); //cod entrenador
+            Integer capacidad = Integer.parseInt(jTextCapacidad.getText());
+            LocalTime c3 = (LocalTime) jComboBoxHorario.getSelectedItem();
+
+            if (c1.isEmpty() || c2 == null || c3 == null) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben completarse");
+                return;
+            }
+
+            if (clase == null) {
+                clase = new Clase(c1, c2, c3, capacidad, true);
+                cData.guardarClase(clase);
+            } else {
+                clase.setNombre(c1);
+                clase.setEntrenador(c2);
+                clase.setHorario(c3);
+                clase.setCapacidad(capacidad);
+                cData.modificarClase(clase);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresá carácteres válidos");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void jComboBoxCodigo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCodigo2ActionPerformed
+
+
+    }//GEN-LAST:event_jComboBoxCodigo2ActionPerformed
+
+    private void jComboBoxCodigo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCodigo1ActionPerformed
+        //nombre clase
+//        Clase seleccionada = (Clase) jComboBoxCodigo1.getSelectedItem();
+//        List<Clase> clases = cData.listarClasesPorNombre(seleccionada.getNombre());
+
+    }//GEN-LAST:event_jComboBoxCodigo1ActionPerformed
+    private void cargarNombres() {
+        List<String> nombres = cData.nombresDeClases();
+        for (String nombre1 : nombres) {
+            jComboBoxCodigo1.addItem(nombre1);
+        }
+        jComboBoxCodigo1.setSelectedIndex(-1);
+
+    }
+    private void jComboBoxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHorarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxHorarioActionPerformed
+
+    private void cargarHorarios() {
+        List<LocalTime> hora = cData.horariosDisponibles();
+        for (LocalTime localTime : hora) {
+            jComboBoxHorario.addItem(localTime);
+        }
+        jComboBoxHorario.setSelectedIndex(-1);
+    }
+
+    private void cargarCodEntrenador() {
+        List<Entrenador> eLista = eData.listarEntrenadores();
+        for (Entrenador nombre1 : eLista) {
+            jComboBoxCodigo2.addItem(nombre1);
+        }
+        jComboBoxCodigo2.setSelectedIndex(-1);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> jComboBoxCodigo1;
-    private javax.swing.JComboBox<String> jComboBoxCodigo2;
-    private javax.swing.JComboBox<String> jComboBoxHorario;
+    private javax.swing.JComboBox<Entrenador> jComboBoxCodigo2;
+    private javax.swing.JComboBox<LocalTime> jComboBoxHorario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelCodigo;
