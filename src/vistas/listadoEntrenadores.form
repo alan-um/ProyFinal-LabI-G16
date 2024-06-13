@@ -143,6 +143,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextApellidoKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextApellidoKeyTyped"/>
               </Events>
             </Component>
@@ -156,6 +157,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextEspecialidadKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextEspecialidadKeyTyped"/>
               </Events>
             </Component>
@@ -168,7 +170,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Por Apellido"/>
+                <Property name="text" type="java.lang.String" value="Por Nombre"/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -205,7 +207,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable2">
+            <Component class="javax.swing.JTable" name="jTableEntrenadores">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="4">

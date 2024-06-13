@@ -77,6 +77,37 @@ public class AsistenciaData {
 
             return asist;    
         }
+    
+    //Buscar un aistencia según su Socio y fecha
+    public Asistencia buscarAsistencia(Socio socio, LocalDate fAsistencia) {
+        Asistencia asist = null;
+        String sql = "SELECT * FROM asistencia WHERE idSocio = ? AND fAsistencia = ? ";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, socio.getIdSocio());
+            ps.setDate(2, Date.valueOf(fAsistencia));
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                asist = new Asistencia();
+                asist.setIdAsistencia(rs.getInt("idAsistencia"));
+                asist.setSocio(socio);
+                Clase clase = cData.buscarClase(rs.getInt("idClase"));
+                asist.setClase(clase);
+                asist.setfAsistencia(fAsistencia);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ninguna Asistencia con ese Id");              
+                ps.close();}
+            
+            }catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Asistencia " + ex.getMessage());
+            }
+
+            return asist;    
+        }
 
     public List<Socio> socioPorClases(int idClase, LocalDate fAsistencia) {
         List<Socio> socios = new ArrayList();

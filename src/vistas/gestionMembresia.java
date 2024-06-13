@@ -5,21 +5,54 @@
  */
 package vistas;
 
+import accesoADatos.AsistenciaData;
+import accesoADatos.ClaseData;
+import accesoADatos.MembresiaData;
+import accesoADatos.SocioData;
+import entidades.Clase;
+import entidades.Membresia;
+import entidades.Socio;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author CCMEW
  */
-public class Membresia extends javax.swing.JInternalFrame {
+public class gestionMembresia extends javax.swing.JInternalFrame {
+    
+    private ClaseData cData = null;
+    private MembresiaData mData = null;
+    private SocioData sData = null;
+    private AsistenciaData aData = null;
+    private DefaultTableModel modelo = new DefaultTableModel();
 
     /**
      * Creates new form gestionSocios
      */
-    public Membresia() {
+    public gestionMembresia() {
         initComponents();
-       int x=JFInicio.escritorio.getWidth()- this.getWidth();
-        int y=JFInicio.escritorio.getHeight() - this.getHeight();
-        setLocation(x/2, y/2);
-           }
+        int x = JFInicio.escritorio.getWidth() - this.getWidth();
+        int y = JFInicio.escritorio.getHeight() - this.getHeight();
+        setLocation(x / 2, y / 2);
+        
+        cData = new ClaseData();
+        mData = new MembresiaData();
+        sData = new SocioData();
+        aData = new AsistenciaData();
+        ///jDateFAsistencia.setDate(Date.from(Instant.now()));
+
+        llenarCombos();
+        
+        armarCabecera();
+        actualizarTabla();
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,20 +67,20 @@ public class Membresia extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableMembre = new javax.swing.JTable();
         jLabelNombre = new javax.swing.JLabel();
         jLabelNombre1 = new javax.swing.JLabel();
-        jComboBoxHorario2 = new javax.swing.JComboBox<>();
-        jTextEdad = new javax.swing.JTextField();
+        jComboBoxSocio = new javax.swing.JComboBox<>();
         jLabelNombre2 = new javax.swing.JLabel();
         jLabelNombre3 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateFFin = new com.toedter.calendar.JDateChooser();
+        jDateFInicio = new com.toedter.calendar.JDateChooser();
         jLabelNombre4 = new javax.swing.JLabel();
-        jTextEdad1 = new javax.swing.JTextField();
+        jTextCosto = new javax.swing.JTextField();
+        jComboBoxPases = new javax.swing.JComboBox<>();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -68,7 +101,7 @@ public class Membresia extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/membresias.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -40, 560, 230));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMembre.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -79,9 +112,9 @@ public class Membresia extends javax.swing.JInternalFrame {
                 "CODIGO", "DNI", "APELLIDO", "NOMBRE", "TELEFONO", "EMAIL"
             }
         ));
-        jScrollPane1.setViewportView(jTable2);
+        jScrollPane1.setViewportView(jTableMembre);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 570, 270));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 770, 270));
 
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -93,28 +126,14 @@ public class Membresia extends javax.swing.JInternalFrame {
         jLabelNombre1.setText("Seleccione Socio:");
         jPanel1.add(jLabelNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 170, 40));
 
-        jComboBoxHorario2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBoxHorario2.setForeground(new java.awt.Color(0, 0, 153));
-        jComboBoxHorario2.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxSocio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxSocio.setForeground(new java.awt.Color(0, 0, 153));
+        jComboBoxSocio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxHorario2ActionPerformed(evt);
+                jComboBoxSocioActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxHorario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 490, 30));
-
-        jTextEdad.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEdad.setForeground(new java.awt.Color(0, 51, 153));
-        jTextEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextEdadActionPerformed(evt);
-            }
-        });
-        jTextEdad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextEdadKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 100, 30));
+        jPanel1.add(jComboBoxSocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 490, 30));
 
         jLabelNombre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre2.setForeground(new java.awt.Color(255, 255, 255));
@@ -142,27 +161,42 @@ public class Membresia extends javax.swing.JInternalFrame {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 70));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 200, -1));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 540, 200, 20));
+        jPanel1.add(jDateFFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 532, 200, 30));
+
+        jDateFInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateFInicioPropertyChange(evt);
+            }
+        });
+        jPanel1.add(jDateFInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 200, 30));
 
         jLabelNombre4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre4.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre4.setText("Costo:");
         jPanel1.add(jLabelNombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 490, 70, 40));
 
-        jTextEdad1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextEdad1.setForeground(new java.awt.Color(0, 51, 153));
-        jTextEdad1.addActionListener(new java.awt.event.ActionListener() {
+        jTextCosto.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jTextCosto.setForeground(new java.awt.Color(0, 51, 153));
+        jTextCosto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextEdad1ActionPerformed(evt);
+                jTextCostoActionPerformed(evt);
             }
         });
-        jTextEdad1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextCosto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextEdad1KeyTyped(evt);
+                jTextCostoKeyTyped(evt);
             }
         });
-        jPanel1.add(jTextEdad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 100, 30));
+        jPanel1.add(jTextCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 100, 30));
+
+        jComboBoxPases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxPases.setForeground(new java.awt.Color(0, 0, 153));
+        jComboBoxPases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPasesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxPases, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 180, 30));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -185,40 +219,45 @@ public class Membresia extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void jComboBoxHorario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHorario2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxHorario2ActionPerformed
-
-    private void jTextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdadKeyTyped
-        char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume();         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdadKeyTyped
-
-    private void jTextEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdadActionPerformed
+    private void jComboBoxSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSocioActionPerformed
+        actualizarTabla();
+    }//GEN-LAST:event_jComboBoxSocioActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void jTextEdad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEdad1ActionPerformed
+    private void jTextCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCostoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdad1ActionPerformed
+    }//GEN-LAST:event_jTextCostoActionPerformed
 
-    private void jTextEdad1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdad1KeyTyped
+    private void jTextCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCostoKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEdad1KeyTyped
-    
+    }//GEN-LAST:event_jTextCostoKeyTyped
+
+    private void jComboBoxPasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPasesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxPasesActionPerformed
+
+    private void jDateFInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFInicioPropertyChange
+        Date fInicio = jDateFInicio.getDate();
+        if (fInicio != null) {
+            jDateFFin.setDate(new Date(fInicio.getYear(),fInicio.getMonth(),fInicio.getDate()+30));
+        }else{
+            jDateFFin.setDate(null);
+        }
+    }//GEN-LAST:event_jDateFInicioPropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> jComboBoxHorario2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JComboBox<Integer> jComboBoxPases;
+    private javax.swing.JComboBox<Socio> jComboBoxSocio;
+    private com.toedter.calendar.JDateChooser jDateFFin;
+    private com.toedter.calendar.JDateChooser jDateFInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelNombre;
@@ -228,8 +267,63 @@ public class Membresia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextEdad;
-    private javax.swing.JTextField jTextEdad1;
+    private javax.swing.JTable jTableMembre;
+    private javax.swing.JTextField jTextCosto;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarCombos() {
+        //llenarCombo
+        List<Socio> lista = sData.listarSocios();
+        for (Socio item : lista) {
+            jComboBoxSocio.addItem(item);
+        }
+        jComboBoxSocio.setSelectedIndex(-1);
+        
+        jComboBoxPases.addItem(8);
+        jComboBoxPases.addItem(12);
+        jComboBoxPases.addItem(20);
+        jComboBoxPases.setSelectedIndex(-1);
+    }
+    
+    private void armarCabecera() {
+        //armarcabecera
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("Código");
+        filaCabecera.add("DNI Socio");
+        filaCabecera.add("Apellido");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Pases Disponibles");
+        filaCabecera.add("Desde:");
+        filaCabecera.add("Hasta:");
+        filaCabecera.add("Costo");
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+        jTableMembre.setModel(modelo);
+    }
+    
+    private void borrarFilasTabla() {
+        int indice = modelo.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+    
+    private void actualizarTabla() {
+        borrarFilasTabla();
+        //btnBorrarAsistencia.setEnabled(false);
+
+        Socio socio = (Socio) jComboBoxSocio.getSelectedItem();
+        List<Membresia> lista = null;
+        if (socio != null) {
+            lista = mData.membresiasPorSocio(socio.getIdSocio());
+        } else {
+            lista = mData.listadoMembresia();
+        }
+        
+        for (Membresia aux : lista) {
+            modelo.addRow(new Object[]{aux.getIdMembresia(), aux.getSocio().getDni(), aux.getSocio().getApellido(), aux.getSocio().getNombre(), aux.getCantPases(), aux.getfInicio(), aux.getfFin(), aux.getCosto()});
+        }
+    }
+    
 }

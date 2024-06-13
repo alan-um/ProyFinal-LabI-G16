@@ -78,7 +78,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Listado e Inscripci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Listado"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
@@ -104,7 +104,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuAltaMembresia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alta"/>
+                <Property name="text" type="java.lang.String" value="Alta y renovaci&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuAltaMembresiaActionPerformed"/>
@@ -112,7 +112,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemListadoMembresias">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Listado y renovaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Listado "/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemListadoMembresiasActionPerformed"/>

@@ -5,24 +5,97 @@
  */
 package vistas;
 
+import accesoADatos.SocioData;
+import entidades.Socio;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
- * 
+ *
  * @author CCMEW
  */
 public class listadoSocios extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form gestionSocios
-     */
+    private List<Socio> listaS; //1
+    private SocioData socioData;  //2
+
+    private DefaultTableModel modelo = new DefaultTableModel();
+
     public listadoSocios() {
         initComponents();
-       int x=JFInicio.escritorio.getWidth()- this.getWidth();
-        int y=JFInicio.escritorio.getHeight() - this.getHeight();
-        setLocation(x/2, y/2);
-       jTextApellido.setEnabled(false);
-      
-       
-       
+        int x = JFInicio.escritorio.getWidth() - this.getWidth();
+        int y = JFInicio.escritorio.getHeight() - this.getHeight();
+        setLocation(x / 2, y / 2);
+        jTextApellido.setEnabled(false);
+        socioData = new SocioData();//3
+        armarCabeceraTabla();
+        jTableSocios.getColumnModel().getColumn(0).setPreferredWidth(60);
+        jTableSocios.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableSocios.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTableSocios.getColumnModel().getColumn(3).setPreferredWidth(200);
+        jTableSocios.getColumnModel().getColumn(4).setPreferredWidth(80);
+        jTableSocios.getColumnModel().getColumn(5).setPreferredWidth(200);
+        jTableSocios.getColumnModel().getColumn(6).setPreferredWidth(100);
+        jTableSocios.setRowHeight(30);
+        cargaSocios();
+
+    }
+
+    private void armarCabeceraTabla() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("ID");
+        filaCabecera.add("DNI");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Apellido");
+        filaCabecera.add("Edad");
+        filaCabecera.add("Email");
+        filaCabecera.add("Telefono");
+
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+        jTableSocios.setModel(modelo);
+    }
+
+    private void borrarFilaTabla() {
+        int indice = modelo.getRowCount() - 1;
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private DefaultTableModel cargaSocioPorNombre() {
+        borrarFilaTabla();
+        List<Socio> lista = socioData.listarSociosPorNombre(jTextApellido.getText());
+        for (Socio m : lista) {
+            modelo.addRow(new Object[]{m.getIdSocio(), m.getDni(), m.getNombre(), m.getApellido(), m.getEdad(), m.getCorreo(), m.getTelefono()});
+        }
+        return modelo;
+    }
+
+    private DefaultTableModel cargaSocioPorId() {
+        borrarFilaTabla();
+        if (!jTextCodigo.getText().equals("")) {
+            Socio m = socioData.buscarSocio(Integer.parseInt(jTextCodigo.getText()));
+            if (m == null) {
+                JOptionPane.showMessageDialog(this, "No se encuentra el ID buscado");
+            } else {
+
+                modelo.addRow(new Object[]{m.getIdSocio(), m.getDni(), m.getNombre(), m.getApellido(), m.getEdad(), m.getCorreo(), m.getTelefono()});
+            }
+        }
+        return modelo;
+    }
+
+    private DefaultTableModel cargaSocios() {
+
+        List<Socio> lista = socioData.listarSocios();
+        for (Socio m : lista) {
+            modelo.addRow(new Object[]{m.getIdSocio(), m.getDni(), m.getNombre(), m.getApellido(), m.getEdad(), m.getCorreo(), m.getTelefono()});
+        }
+        return modelo;
     }
 
     /**
@@ -43,7 +116,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jRadioCodigo = new javax.swing.JRadioButton();
         jRadioApellido = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableSocios = new javax.swing.JTable();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -74,6 +147,9 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jTextCodigo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextCodigo.setForeground(new java.awt.Color(0, 51, 153));
         jTextCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextCodigoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextCodigoKeyTyped(evt);
             }
@@ -82,6 +158,9 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jTextApellido.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextApellido.setForeground(new java.awt.Color(0, 51, 153));
         jTextApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextApellidoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextApellidoKeyTyped(evt);
             }
@@ -143,7 +222,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 440, 100));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSocios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -154,7 +233,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
                 "CODIGO", "DNI", "APELLIDO", "NOMBRE", "TELEFONO", "EMAIL"
             }
         ));
-        jScrollPane1.setViewportView(jTable2);
+        jScrollPane1.setViewportView(jTableSocios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 137, 810, 440));
 
@@ -181,7 +260,6 @@ public class listadoSocios extends javax.swing.JInternalFrame {
 
     private void jRadioCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCodigoActionPerformed
         jRadioCodigo.setSelected(true);
-        jTextCodigo.requestFocus(true);
         jRadioApellido.setSelected(false);
         jTextApellido.setVisible(false);
         jTextApellido.setEnabled(false);
@@ -189,6 +267,9 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jTextCodigo.setEnabled(true);
         jTextApellido.setText("");
         jTextCodigo.setText("");
+        borrarFilaTabla();
+        cargaSocios();
+        jTextCodigo.requestFocus(true);
     }//GEN-LAST:event_jRadioCodigoActionPerformed
 
     private void jRadioCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioCodigoMouseClicked
@@ -198,7 +279,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
     private void jRadioApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioApellidoActionPerformed
         jTextApellido.setVisible(true);
         jTextApellido.requestFocus(true);
-        
+
         jTextApellido.setFocusable(true);
         jRadioCodigo.setSelected(false);
         jRadioApellido.setSelected(true);
@@ -207,18 +288,42 @@ public class listadoSocios extends javax.swing.JInternalFrame {
         jTextApellido.setEnabled(true);
         jTextApellido.setText("");
         jTextCodigo.setText("");
+        borrarFilaTabla();
+        cargaSocios();
+
     }//GEN-LAST:event_jRadioApellidoActionPerformed
 
     private void jTextCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCodigoKeyTyped
-         char c=evt.getKeyChar(); // para ingresar solo numeros
-        if(c<'0' || c>'9')evt.consume(); 
+        char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
     }//GEN-LAST:event_jTextCodigoKeyTyped
 
     private void jTextApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyTyped
-         char c=evt.getKeyChar(); /// para ingresar solo letras
-        if(c<'a' || c>'z')evt.consume(); 
+        char c = evt.getKeyChar(); /// para ingresar solo letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+
+        String nuestroTexto = jTextApellido.getText();
+        if (nuestroTexto.length() > 0) {
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra) + nuestroTexto.substring(1, nuestroTexto.length());
+            jTextApellido.setText(nuestroTexto);
+
+        }
+
     }//GEN-LAST:event_jTextApellidoKeyTyped
-    
+
+    private void jTextApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextApellidoKeyReleased
+        cargaSocioPorNombre();
+    }//GEN-LAST:event_jTextApellidoKeyReleased
+
+    private void jTextCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCodigoKeyReleased
+        cargaSocioPorId();        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextCodigoKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
@@ -229,7 +334,7 @@ public class listadoSocios extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jRadioApellido;
     private javax.swing.JRadioButton jRadioCodigo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableSocios;
     private javax.swing.JTextField jTextApellido;
     private javax.swing.JTextField jTextCodigo;
     // End of variables declaration//GEN-END:variables

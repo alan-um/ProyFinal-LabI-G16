@@ -15,9 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import vistas.gestionAsistencia;
 
 public class MembresiaData {
 
@@ -128,6 +130,33 @@ public class MembresiaData {
         }
         return membresias;
     }
+    
+    public List<Membresia> membresiasPorSocioYFecha(int idSocio, LocalDate fecha) {
+        List<Membresia> membresias = new ArrayList();
+        try {
+            String sql = "SELECT * FROM membresia WHERE idSocio = ? AND fInicio < ? AND fFin > ? AND estado = 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ps.setDate(2, Date.valueOf(fecha));
+            ps.setDate(3, Date.valueOf(fecha));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Membresia m = new Membresia();
+                m.setIdMembresia(rs.getInt("idMembresia"));
+                m.setSocio(sData.buscarSocio(rs.getInt("idSocio")));
+                m.setCantPases(rs.getInt("cantPases"));
+                m.setfInicio(rs.getDate("fInicio").toLocalDate());
+                m.setfFin(rs.getDate("fFin").toLocalDate());
+                m.setCosto(rs.getInt("costo"));
+                m.setEstado(rs.getBoolean("estado"));
+                membresias.add(m);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Membresia " + e.getMessage());
+        }
+        return membresias;
+    }
 
     public void eliminarMembresia(int id) {
         try {
@@ -164,8 +193,27 @@ public class MembresiaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Membresia "+ e.getMessage());
         }
     }
-
-
+    
+    //Es membresia Válida??
+    public boolean nuevaMembresiaValida(Socio socio, Membresia nueva) {
+        
+        try {
+            String sql = "SELECT * FROM membresia WHERE idSocio = ? AND ( fInicio < ? AND fFin > ? AND cantPases > 0 ) AND estado = 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, socio.getIdSocio());
+            ps.setDate(2, Date.valueOf(nueva.getfFin()));
+            ps.setDate(3, Date.valueOf(nueva.getfInicio()));
+            
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return false;
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Membresia " + e.getMessage());
+        }
+        return true;
+    }
 
 }
 
