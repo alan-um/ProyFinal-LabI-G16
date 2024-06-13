@@ -9,6 +9,7 @@ import accesoADatos.AsistenciaData;
 import accesoADatos.ClaseData;
 import accesoADatos.MembresiaData;
 import accesoADatos.SocioData;
+import entidades.Asistencia;
 import entidades.Clase;
 import entidades.Membresia;
 import entidades.Socio;
@@ -18,6 +19,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  * @author CCMEW
  */
 public class gestionMembresia extends javax.swing.JInternalFrame {
-    
+
     private ClaseData cData = null;
     private MembresiaData mData = null;
     private SocioData sData = null;
@@ -40,7 +44,7 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
         int x = JFInicio.escritorio.getWidth() - this.getWidth();
         int y = JFInicio.escritorio.getHeight() - this.getHeight();
         setLocation(x / 2, y / 2);
-        
+
         cData = new ClaseData();
         mData = new MembresiaData();
         sData = new SocioData();
@@ -48,10 +52,12 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
         ///jDateFAsistencia.setDate(Date.from(Instant.now()));
 
         llenarCombos();
-        
         armarCabecera();
-        actualizarTabla();
+        //actualizarTabla();
         
+        //jTableMembre.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTableMembre.setRowHeight(30);
+
     }
 
     /**
@@ -65,22 +71,23 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMembre = new javax.swing.JTable();
-        jLabelNombre = new javax.swing.JLabel();
         jLabelNombre1 = new javax.swing.JLabel();
         jComboBoxSocio = new javax.swing.JComboBox<>();
-        jLabelNombre2 = new javax.swing.JLabel();
-        jLabelNombre3 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelNombre = new javax.swing.JLabel();
+        jLabelNombre3 = new javax.swing.JLabel();
+        jLabelNombre2 = new javax.swing.JLabel();
         jDateFFin = new com.toedter.calendar.JDateChooser();
         jDateFInicio = new com.toedter.calendar.JDateChooser();
+        jComboBoxPases = new javax.swing.JComboBox<>();
         jLabelNombre4 = new javax.swing.JLabel();
         jTextCosto = new javax.swing.JTextField();
-        jComboBoxPases = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
 
         setClosable(true);
@@ -98,9 +105,6 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 600, 120, 70));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/membresias.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -40, 560, 230));
-
         jTableMembre.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -114,17 +118,12 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableMembre);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 770, 270));
-
-        jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre.setText("Ingrese Cantidad de pases:");
-        jPanel1.add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 220, 40));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 760, 220));
 
         jLabelNombre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre1.setText("Seleccione Socio:");
-        jPanel1.add(jLabelNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 170, 40));
+        jPanel1.add(jLabelNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 170, 40));
 
         jComboBoxSocio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBoxSocio.setForeground(new java.awt.Color(0, 0, 153));
@@ -133,70 +132,128 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
                 jComboBoxSocioActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxSocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 490, 30));
-
-        jLabelNombre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre2.setText("Fecha desde:");
-        jPanel1.add(jLabelNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 530, 120, 40));
-
-        jLabelNombre3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelNombre3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre3.setText("Fecha hasta:");
-        jPanel1.add(jLabelNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, 120, 40));
+        jPanel1.add(jComboBoxSocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 490, 30));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
-        btnNuevo.setText("Nuevo/Renovar");
+        btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 600, 160, 70));
+        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 600, 130, 70));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconEliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 600, 150, 70));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 600, 150, 70));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconGuardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 70));
-        jPanel1.add(jDateFFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 532, 200, 30));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 600, 140, 70));
+
+        jPanel2.setBackground(new java.awt.Color(0, 51, 153));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar membresía:", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
+        jPanel2.setToolTipText("Agregar membresia:");
+        jPanel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel2.setName("Buscar"); // NOI18N
+        jPanel2.setOpaque(false);
+
+        jLabelNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre.setText("Cantidad de pases:");
+
+        jLabelNombre3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelNombre3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre3.setText("Fecha hasta:");
+
+        jLabelNombre2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelNombre2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre2.setText("Fecha desde:");
+
+        jDateFFin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateFFinPropertyChange(evt);
+            }
+        });
 
         jDateFInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jDateFInicioPropertyChange(evt);
             }
         });
-        jPanel1.add(jDateFInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 200, 30));
+
+        jComboBoxPases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBoxPases.setForeground(new java.awt.Color(0, 0, 153));
 
         jLabelNombre4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelNombre4.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre4.setText("Costo:");
-        jPanel1.add(jLabelNombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 490, 70, 40));
 
         jTextCosto.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jTextCosto.setForeground(new java.awt.Color(0, 51, 153));
-        jTextCosto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCostoActionPerformed(evt);
+        jTextCosto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextCostoFocusLost(evt);
             }
         });
-        jTextCosto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextCostoKeyTyped(evt);
-            }
-        });
-        jPanel1.add(jTextCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 100, 30));
 
-        jComboBoxPases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBoxPases.setForeground(new java.awt.Color(0, 0, 153));
-        jComboBoxPases.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxPasesActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboBoxPases, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 180, 30));
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jDateFInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                    .addComponent(jComboBoxPases, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNombre4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jDateFFin, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addComponent(jTextCosto))
+                .addGap(17, 17, 17))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxPases, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateFFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateFInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 760, 140));
+        jPanel2.getAccessibleContext().setAccessibleName("Nueva Membresia");
+        jPanel2.getAccessibleContext().setAccessibleDescription("Nueva Membresia");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/membresias.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -40, 560, 230));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoFormulario.jpeg"))); // NOI18N
         jPanel1.add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 710));
@@ -224,29 +281,133 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBoxSocioActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-
+        limpiarCampos();
     }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void jTextCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCostoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCostoActionPerformed
-
-    private void jTextCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCostoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCostoKeyTyped
-
-    private void jComboBoxPasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPasesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxPasesActionPerformed
 
     private void jDateFInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFInicioPropertyChange
         Date fInicio = jDateFInicio.getDate();
+        Date hoy = Date.from(Instant.now());
+        Date hoyMenos30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() - 30);
         if (fInicio != null) {
-            jDateFFin.setDate(new Date(fInicio.getYear(),fInicio.getMonth(),fInicio.getDate()+30));
-        }else{
+            if (fInicio.before(hoyMenos30)) {
+                JOptionPane.showMessageDialog(this, "No puede seleccionar una fecha de inicio de más de 30 días de antiguedad.");
+                jDateFInicio.setDate(hoy);
+                return;
+            }
+            jDateFFin.setDate(new Date(fInicio.getYear(), fInicio.getMonth(), fInicio.getDate() + 30));
+        } else {
             jDateFFin.setDate(null);
         }
     }//GEN-LAST:event_jDateFInicioPropertyChange
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        //Valida que se haya seleccionado una fila.
+        int filaSelec = jTableMembre.getSelectedRow();
+        if (filaSelec < 0) {
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna membresía para borrar.");
+            return;
+        }
+
+        //Valida que esté seguro de borrar la asistencia
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea borrar la membresía seleccionada?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        //Recupera datos del formulario
+        int idMembresia = (Integer) modelo.getValueAt(filaSelec, 0);
+
+        //Si valido todo, entonces:
+        //  -Borra membresi
+        mData.eliminarMembresia(idMembresia);
+        limpiarMembreNueva();
+        //  -Actualiza tabla
+        actualizarTabla();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+        //Validar que se haya seleccionado un socio
+        Socio socio = (Socio) jComboBoxSocio.getSelectedItem();
+        if (socio == null) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún socio.");
+            return;
+        }
+
+        //Validar que se haya seleccionado una cant de pases
+        Integer cantPases = (Integer) jComboBoxPases.getSelectedItem();
+        if (cantPases == null) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado la cantidad de pases de la membresía.");
+            return;
+        }
+
+        //Valida que se haya ingresado un monto
+        double costo;
+        if (jTextCosto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No ha ingresado el costo de la membresía.");
+            return;
+        } else {
+            costo = Double.parseDouble(jTextCosto.getText());
+        }
+
+        //Valida las fechas
+        Date fInicio = jDateFInicio.getDate();
+        if (fInicio == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de inicio para la membresía.");
+            return;
+        }
+        Date fFin = jDateFFin.getDate();
+        if (fFin == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de finalización para la membresía.");
+            return;
+        }
+        LocalDate LDInicio = LocalDate.ofInstant(fInicio.toInstant(), ZoneId.systemDefault());
+        LocalDate LDFin = LocalDate.ofInstant(fFin.toInstant(), ZoneId.systemDefault());
+
+        //Valida si se puede agregar la mambresía
+        Membresia nueva = new Membresia(socio, cantPases, LDInicio, LDFin, costo, true);
+        if (!mData.nuevaMembresiaValida(socio, nueva)) {
+            JOptionPane.showMessageDialog(this, "No se puede registrar la nueva membresía. El socio ya tiene una membresía activa para las fechas indicadas.");
+            return;
+        }
+
+        //Si valido todo, entonces guarda membresía nueva, limpia nueva membresía y actualiza tabla
+        mData.guardaMembresia(nueva);
+        limpiarMembreNueva();
+        actualizarTabla();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void jTextCostoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextCostoFocusLost
+        if (!jTextCosto.getText().isEmpty()) {
+            Pattern p = Pattern.compile("^[+]?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)?$");
+            Matcher m = p.matcher(jTextCosto.getText());
+            if (!m.matches()) {
+                JOptionPane.showMessageDialog(this, "El monto ingresado no es válido.");
+                jTextCosto.requestFocus();
+                return;
+            }
+        }
+    }//GEN-LAST:event_jTextCostoFocusLost
+
+    private void jDateFFinPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFFinPropertyChange
+        Date fInicio = jDateFInicio.getDate();
+        Date fFin = jDateFFin.getDate();
+        if (fFin != null) {
+            if (fInicio == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de inicio para la membresía.");
+                jDateFFin.setDate(null);
+                return;
+            }
+            
+            Date inicioMas60 = new Date(fInicio.getYear(), fInicio.getMonth(), fInicio.getDate() + 60);
+            if (fFin.after(inicioMas60)) {
+                JOptionPane.showMessageDialog(this, "La duración máxima de las membresías es de 60 días.");
+                jDateFFin.setDate(new Date(fInicio.getYear(), fInicio.getMonth(), fInicio.getDate() + 30));
+                return;
+            }
+        }
+    }//GEN-LAST:event_jDateFFinPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -266,6 +427,7 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelNombre3;
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMembre;
     private javax.swing.JTextField jTextCosto;
@@ -278,13 +440,13 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
             jComboBoxSocio.addItem(item);
         }
         jComboBoxSocio.setSelectedIndex(-1);
-        
+
         jComboBoxPases.addItem(8);
         jComboBoxPases.addItem(12);
         jComboBoxPases.addItem(20);
         jComboBoxPases.setSelectedIndex(-1);
     }
-    
+
     private void armarCabecera() {
         //armarcabecera
         ArrayList<Object> filaCabecera = new ArrayList<>();
@@ -301,29 +463,41 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
         }
         jTableMembre.setModel(modelo);
     }
-    
+
     private void borrarFilasTabla() {
         int indice = modelo.getRowCount() - 1;
         for (int i = indice; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
-    
+
     private void actualizarTabla() {
         borrarFilasTabla();
         //btnBorrarAsistencia.setEnabled(false);
 
         Socio socio = (Socio) jComboBoxSocio.getSelectedItem();
-        List<Membresia> lista = null;
         if (socio != null) {
-            lista = mData.membresiasPorSocio(socio.getIdSocio());
-        } else {
-            lista = mData.listadoMembresia();
-        }
-        
-        for (Membresia aux : lista) {
-            modelo.addRow(new Object[]{aux.getIdMembresia(), aux.getSocio().getDni(), aux.getSocio().getApellido(), aux.getSocio().getNombre(), aux.getCantPases(), aux.getfInicio(), aux.getfFin(), aux.getCosto()});
+            List<Membresia> lista = mData.membresiasPorSocio(socio.getIdSocio());
+
+            if (lista != null) {
+                for (Membresia aux : lista) {
+                    modelo.addRow(new Object[]{aux.getIdMembresia(), aux.getSocio().getDni(), aux.getSocio().getApellido(), aux.getSocio().getNombre(), aux.getCantPases(), aux.getfInicio(), aux.getfFin(), aux.getCosto()});
+                }
+            }
         }
     }
-    
+
+    private void limpiarCampos() {
+        jComboBoxSocio.setSelectedIndex(-1);
+        borrarFilasTabla();
+        limpiarMembreNueva();
+    }
+
+    private void limpiarMembreNueva() {
+        jComboBoxPases.setSelectedIndex(-1);
+        jTextCosto.setText("");
+        jDateFInicio.setDate(null);
+        jDateFFin.setDate(null);
+    }
+
 }

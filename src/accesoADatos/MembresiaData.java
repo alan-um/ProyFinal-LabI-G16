@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import vistas.gestionAsistencia;
 
 public class MembresiaData {
 
@@ -71,7 +70,7 @@ public class MembresiaData {
                 m.setCantPases(rs.getInt("cantPases"));
                 m.setfInicio(rs.getDate("fInicio").toLocalDate());
                 m.setfFin(rs.getDate("fFin").toLocalDate());
-                m.setCosto(rs.getInt("costo"));
+                m.setCosto(rs.getDouble("costo"));
                 m.setEstado(rs.getBoolean("estado"));
             }
             ps.close();
@@ -85,7 +84,7 @@ public class MembresiaData {
     public List<Membresia> listadoMembresia() {
         List<Membresia> membresias = new ArrayList();
         try {
-            String sql = "SELECT * FROM membresia";
+            String sql = "SELECT * FROM membresia WHERE estado = 1";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -95,7 +94,7 @@ public class MembresiaData {
                 m.setCantPases(rs.getInt("cantPases"));
                 m.setfInicio(rs.getDate("fInicio").toLocalDate());
                 m.setfFin(rs.getDate("fFin").toLocalDate());
-                m.setCosto(rs.getInt("costo"));
+                m.setCosto(rs.getDouble("costo"));
                 m.setEstado(rs.getBoolean("estado"));
                 membresias.add(m);
             }
@@ -109,7 +108,7 @@ public class MembresiaData {
     public List<Membresia> membresiasPorSocio(int idSocio) {
         List<Membresia> membresias = new ArrayList();
         try {
-            String sql = "SELECT * FROM membresia WHERE idSocio = ?";
+            String sql = "SELECT * FROM membresia WHERE idSocio = ? AND estado = 1";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idSocio);
             ResultSet rs = ps.executeQuery();
@@ -120,7 +119,7 @@ public class MembresiaData {
                 m.setCantPases(rs.getInt("cantPases"));
                 m.setfInicio(rs.getDate("fInicio").toLocalDate());
                 m.setfFin(rs.getDate("fFin").toLocalDate());
-                m.setCosto(rs.getInt("costo"));
+                m.setCosto(rs.getDouble("costo"));
                 m.setEstado(rs.getBoolean("estado"));
                 membresias.add(m);
             }
@@ -147,7 +146,7 @@ public class MembresiaData {
                 m.setCantPases(rs.getInt("cantPases"));
                 m.setfInicio(rs.getDate("fInicio").toLocalDate());
                 m.setfFin(rs.getDate("fFin").toLocalDate());
-                m.setCosto(rs.getInt("costo"));
+                m.setCosto(rs.getDouble("costo"));
                 m.setEstado(rs.getBoolean("estado"));
                 membresias.add(m);
             }

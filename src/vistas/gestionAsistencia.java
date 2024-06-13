@@ -54,6 +54,9 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         llenarComboClases();
         llenarComboSocios();
         armarCabecera();
+        
+//        jTableAsistencia.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTableAsistencia.setRowHeight(30);
 
     }
 
@@ -151,7 +154,7 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jDateFAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 190, 30));
 
-        btnRegistrarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNuevo.png"))); // NOI18N
+        btnRegistrarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconNotas.png"))); // NOI18N
         btnRegistrarAsistencia.setText("Registrar asistencia");
         btnRegistrarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +207,6 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
     private void btnRegistrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciaActionPerformed
         Clase claseSelec = (Clase) jComboBoxClase.getSelectedItem();
         Socio socioSelec = (Socio) jComboBoxSocio.getSelectedItem();
-        LocalDate fAsis = LocalDate.ofInstant(jDateFAsistencia.getDate().toInstant(), ZoneId.systemDefault());
 
         //Validar que se haya seleccionado una clase y un socio
         if (claseSelec == null) {
@@ -216,8 +218,27 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
             return;
         }
         
+        //Valida la fecha de asistencia
+        Date fAsis = jDateFAsistencia.getDate();
+        Date hoy = Date.from(Instant.now());
+        Date hoyMenos30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() - 30);
+        Date hoyMas30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() + 30);
+        if (fAsis != null) {
+            if (fAsis.before(hoyMenos30)) {
+                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una antigüedad de más de 30 días.");
+                return;
+            }
+            
+            if (fAsis.after(hoyMas30)) {
+                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una posterioridad de más de 30 días.");
+                return;
+            }
+        }
+        LocalDate LDfAsis = LocalDate.ofInstant(jDateFAsistencia.getDate().toInstant(), ZoneId.systemDefault());
+        
+        
         //Recuperamos la lista de asistencia
-        List<Socio> lista = aData.socioPorClases(claseSelec.getIdClase(), fAsis);
+        List<Socio> lista = aData.socioPorClases(claseSelec.getIdClase(), LDfAsis);
         
         //Validar que el socio no este anotado
         for (Socio aux : lista) {
@@ -236,7 +257,7 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         }
         
         //Validar membresia
-        List<Membresia> listaM = mData.membresiasPorSocioYFecha(socioSelec.getIdSocio(),fAsis);
+        List<Membresia> listaM = mData.membresiasPorSocioYFecha(socioSelec.getIdSocio(),LDfAsis);
         if(listaM.size()==0){
             JOptionPane.showMessageDialog(this, "El socio no cuenta con membresías activas para la fecha seleccionada.");
             return;
@@ -256,7 +277,7 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         
         //Si valido todo, entonces:
         //  -Genera asistencia
-        aData.guardarAsistencia(new Asistencia(socioSelec, claseSelec, fAsis));
+        aData.guardarAsistencia(new Asistencia(socioSelec, claseSelec, LDfAsis));
         //  -Descuenta un pase y actuliza membresia
         membreActiva.setCantPases(membreActiva.getCantPases()-1);
         mData.modificarMembresia(membreActiva);
@@ -268,8 +289,26 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarAsistenciaActionPerformed
 
     private void jDateFAsistenciaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFAsistenciaPropertyChange
-        // TODO add your handling code here:
-        actualizarTabla();
+       
+        Date fAsis = jDateFAsistencia.getDate();
+        Date hoy = Date.from(Instant.now());
+        Date hoyMenos30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() - 30);
+        Date hoyMas30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() + 30);
+        
+        if (fAsis != null) {
+//            if (fAsis.before(hoyMenos30)) {
+//                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una antigüedad de más de 30 días.");
+//                jDateFAsistencia.setDate(hoy);
+//                return;
+//            }
+//            
+//            if (fAsis.after(hoyMas30)) {
+//                JOptionPane.showMessageDialog(this, "No puede cargar asistencias con una posterioridad de más de 30 días.");
+//                jDateFAsistencia.setDate(hoy);
+//                return;
+//            }ctualizarTabla();
+        actualizarTabla();}
+        
     }//GEN-LAST:event_jDateFAsistenciaPropertyChange
 
     private void btnBorrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarAsistenciaActionPerformed
@@ -281,6 +320,25 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
             return;
         }
         
+        //Valida la fecha de asistencia
+        Date fAsis = jDateFAsistencia.getDate();
+        Date hoy = Date.from(Instant.now());
+        Date hoyMenos30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() - 30);
+        Date hoyMas30 = new Date(hoy.getYear(), hoy.getMonth(), hoy.getDate() + 30);
+        if (fAsis != null) {
+            if (fAsis.before(hoyMenos30)) {
+                JOptionPane.showMessageDialog(this, "No puede borrar asistencias con una antigüedad de más de 30 días.");
+                return;
+            }
+            
+            if (fAsis.after(hoyMas30)) {
+                JOptionPane.showMessageDialog(this, "No puede borrar asistencias con una posterioridad de más de 30 días.");
+                return;
+            }
+        }
+        LocalDate LDfAsis = LocalDate.ofInstant(jDateFAsistencia.getDate().toInstant(), ZoneId.systemDefault());
+        
+        
         //Valida que esté seguro de borrar la asistencia
         int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea borrar la asistencia seleccionada?","Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirm!=JOptionPane.YES_OPTION){
@@ -290,9 +348,9 @@ public class gestionAsistencia extends javax.swing.JInternalFrame {
         //Recupera datos del formulario
         int dni = (Integer) modelo.getValueAt(filaSelec, 0);
         Socio socioSelec = sData.buscarSocioPorDni(dni);
-        LocalDate fAsis = LocalDate.ofInstant(jDateFAsistencia.getDate().toInstant(), ZoneId.systemDefault());
-        Asistencia asistencia = aData.buscarAsistencia(socioSelec, fAsis);
-        List<Membresia> listaM = mData.membresiasPorSocioYFecha(socioSelec.getIdSocio(),fAsis);
+//        LocalDate fAsis = LocalDate.ofInstant(jDateFAsistencia.getDate().toInstant(), ZoneId.systemDefault());
+        Asistencia asistencia = aData.buscarAsistencia(socioSelec, LDfAsis);
+        List<Membresia> listaM = mData.membresiasPorSocioYFecha(socioSelec.getIdSocio(),LDfAsis);
         Membresia membreActiva = listaM.getLast();
         
         //Si valido todo, entonces:
