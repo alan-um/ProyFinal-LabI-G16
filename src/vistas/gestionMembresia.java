@@ -410,6 +410,12 @@ public class gestionMembresia extends javax.swing.JInternalFrame {
                 return;
             }
             
+            if (fFin.before(fInicio)) {
+                JOptionPane.showMessageDialog(this, "La fecha de finalización de la membresía debe ser porterior a la fecha de inicio.");
+                jDateFFin.setDate(new Date(fInicio.getYear(), fInicio.getMonth(), fInicio.getDate() + 30));
+                return;
+            }
+            
             Date inicioMas60 = new Date(fInicio.getYear(), fInicio.getMonth(), fInicio.getDate() + 60);
             if (fFin.after(inicioMas60)) {
                 JOptionPane.showMessageDialog(this, "La duración máxima de las membresías es de 60 días.");

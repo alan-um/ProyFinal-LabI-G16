@@ -348,6 +348,9 @@ public class gestionSocios extends javax.swing.JInternalFrame {
 
     private void jTextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextEdadKeyTyped
         char c = evt.getKeyChar(); // para ingresar solo numeros
+        if (jTextEdad.getText().length() >= 2) {
+            evt.consume();
+        }
         if (c < '0' || c > '9')
             evt.consume();         // TODO add your handling code here:
     }//GEN-LAST:event_jTextEdadKeyTyped
